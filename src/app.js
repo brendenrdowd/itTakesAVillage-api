@@ -5,6 +5,7 @@ const express = require('express'),
   helmet = require('helmet'),
   app = express();
 
+const { NODE_ENV } = require('./config')
 const authRouter = require('./auth/auth-router')
 
 const morganOption = (NODE_ENV === 'production')
