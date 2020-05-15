@@ -1,14 +1,23 @@
 const bcrypt = require("bcryptjs");
 const xss = require("xss");
 
-const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#\$%\^&])[\S]+/;
+const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
 
 const UsersService = {
     hasUserWithUserName(db, username) {
         return db("itav_users")
             .where({ username })
             .first()
-            .then(user => !!user);
+            .then((user) => !!user);
+    },
+    hasUserWithEmail(db, email) {
+        return db("itav_users")
+            .where({ email })
+            .first()
+            .then((email) => !!email);
+    },
+    getAllUsers(db) {
+        return db.from("itav_users").select("*");
     },
     insertUser(db, newUser) {
         return db
@@ -28,7 +37,7 @@ const UsersService = {
             return "Password must not start or end with empty spaces";
         }
         if (!REGEX_UPPER_LOWER_NUMBER_SPECIAL.test(password)) {
-            return "Password must contain one upper case, lower case, number and special character";
+            return "Password must contain at least one upper case letter";
         }
         return null;
     },
@@ -38,12 +47,13 @@ const UsersService = {
     serializeUser(user) {
         return {
             id: user.id,
-            full_name: xss(user.full_name),
+            name: xss(user.name),
             username: xss(user.username),
-            nickname: xss(user.nick_name),
-            date_created: new Date(user.date_created)
+            email: xss(user.email),
+            location: user.location,
+            password: user.password,
         };
-    }
+    },
 };
 
 module.exports = UsersService;
