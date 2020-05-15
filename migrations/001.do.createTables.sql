@@ -33,6 +33,6 @@ ALTER TABLE itav_comments
 
 ALTER TABLE itav_comments
   ADD COLUMN
-    story INTERGER REFERENCES itav_stories(id)
+    story INTEGER REFERENCES itav_stories(id)
     ON DELETE SET NULL;
 
