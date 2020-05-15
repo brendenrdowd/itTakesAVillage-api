@@ -5,21 +5,21 @@ const express = require('express'),
   helmet = require('helmet'),
   app = express();
 
-const authRouter = require('./auth/auth-router')
+//const authRouter = require('./auth/auth-router')
 const CommentsRouter = require('./comments/comments-router')
 
-const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
+const morganOption = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 
 app.use(morgan(morganOption))
 app.use(helmet())
 app.use(cors())
 
-app.use('/api/auth', authRouter)
+//app.use('/api/auth', authRouter)
 app.use('/api', CommentsRouter)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
-  if (NODE_ENV === 'production') {
+  if (process.env.NODE_ENV === 'production') {
     response = { error: { message: 'server error' } }
   } else {
     console.error(error)
