@@ -1,25 +1,25 @@
 const StoryService = {
   // check if Plural story vs stories
-  getAllStories(knex) {
-    return knex.select("*").from("story");
+  getAllStories(db) {
+    return db.select("*").from("itav_stories");
   },
-  getById(knex, id) {
-    return knex.from("story").select("*").where({ id }).first();
+  getById(db, id) {
+    return db.from("itav_stories").select("*").where({ id }).first();
   },
-  insertStory(knex, newStory) {
-    return knex
+  insertStory(db, newStory) {
+    return db
       .insert(newStory)
-      .into("story")
+      .into("itav_stories")
       .returning("*")
       .then((rows) => {
         return rows[0];
       });
   },
-  deleteStory(knex, id) {
-    return knex("story").where({ id }).delete();
+  deleteStory(db, id) {
+    return db("itav_stories").where({ id }).delete();
   },
-  updateStory(knex, id, newStoryFields) {
-    return knex("story").where({ id }).update(newStoryFields);
+  updateStory(db, id, newStoryFields) {
+    return db("itav_stories").where({ id }).update(newStoryFields);
   },
 };
 

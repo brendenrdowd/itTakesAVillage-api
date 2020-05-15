@@ -5,15 +5,6 @@ const StoryRouter = express.Router();
 const bodyParser = express.json();
 
 const serializeStory = (story) => ({
-  // ERD
-  // id = integer
-  // author = integer
-  // issue = text
-  // keyword = text
-  // created_at = datetime
-  // resolved = boolean
-  // we can change these if we dont need them
-  //
   id: story.id,
   // in place of name
   issue: story.issue,
