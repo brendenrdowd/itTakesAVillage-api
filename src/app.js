@@ -6,7 +6,7 @@ const express = require('express'),
   app = express();
 
 const authRouter = require('./auth/auth-router')
-const comments_router = require('./comments/comments-router')
+const CommentsRouter = require('./comments/comments-router')
 
 const morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
@@ -15,7 +15,7 @@ app.use(helmet())
 app.use(cors())
 
 app.use('/api/auth', authRouter)
-app.use('/api', comments_router)
+app.use('/api', CommentsRouter)
 
 app.use(function errorHandler(error, req, res, next) {
   let response
