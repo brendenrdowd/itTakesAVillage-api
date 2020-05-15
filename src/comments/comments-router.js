@@ -1,7 +1,7 @@
 const express = require('express')
 const CommentsService = require('./comments-service')
 const CommentsRouter = express.Router();
-//const logger = require('../logger')
+//const logger = require('morgan')
 const bodyParser = express.json()
 
 const serializeComment = (comment) => ({
@@ -19,8 +19,8 @@ CommentsRouter.route('/comment')
       .catch(next);
   })
   .post(bodyParser, (req, res, next) => { //what abouth auth to post the comment?
-    const { user_id, story_id, content, date } = req.body
-    const newComment = { user_id, story_id, date, content } //? 
+    const { user_id, story_id, comment } = req.body
+    const newComment = { user_id, story_id, comment } //? 
 
     CommentsService.insertComment(req.app.get('db'), newComment)
       .then((comment) => {
@@ -33,8 +33,8 @@ CommentsRouter.route('/comment')
   CommentsRouter.route('/comment/edit/:id')
   
   .patch(bodyParser, (req, res, next) => {
-    const { content } = req.body;
-    const commentToUpdate = { content };
+    const { comment } = req.body;
+    const commentToUpdate = { comment };
 
     CommentsService.editComment(req.app.get('db'), req.params.id, commentToUpdate)
       .then(() => {
