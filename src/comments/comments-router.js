@@ -16,17 +16,19 @@ CommentsRouter.route('/')
       })
       .catch(next);
   })
+
+
   .post(bodyParser, (req, res, next) => {
-    for (const field of ["user_id", "comment"]) {
+    const { author, comment } = req.body
+    console.log(req.body)
+    for (const field of ["author", "comment"]) {
       if (!req.body[field]) {
         return res.status(400).send({
           error: { message: `${field} is required` },
         })
       }
     }
-    const { user_id, comment } = req.body
-    const newComment = { user_id, comment } 
-
+    const newComment = { author, comment }
     CommentsService.insertComment(req.app.get('db'), newComment)
       .then((comment) => {
         res
