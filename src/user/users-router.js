@@ -11,6 +11,14 @@ usersRouter.route('/').get((req, res, next) => {
     })
     .catch(next);
 });
+usersRouter.route('/:id').get((req, res, next) => {
+  UsersService.getUserById(req.app.get('db'), req.params.id )
+    .then((user) => {
+      console.log(user);      
+      res.json(UsersService.serializeUser(user));
+    })
+    .catch(next);
+});
 usersRouter.post('/', jsonBodyParser, (req, res, next) => {
   const { name, email, username, location, password } = req.body;
 

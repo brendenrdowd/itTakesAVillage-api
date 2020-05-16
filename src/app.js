@@ -17,7 +17,7 @@ app.use(helmet());
 app.use(cors());
 
 //app.use('/api/auth', authRouter)
-app.use('/api/', StoryRouter)
+app.use('/api/story', StoryRouter)
 app.use('/api/user', UsersRouter)
 app.use('/api/comment', CommentsRouter)
 app.use(function errorHandler(error, req, res, next) {

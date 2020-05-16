@@ -19,6 +19,11 @@ const UsersService = {
     getAllUsers(db) {
         return db.from("itav_users").select("*");
     },
+    getUserById(db, id) {
+        return db("itav_users")
+            .where({ id })
+            .first();
+    },
     insertUser(db, newUser) {
         return db
             .insert(newUser)
