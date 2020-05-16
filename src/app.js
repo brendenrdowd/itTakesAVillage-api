@@ -1,20 +1,20 @@
-require("dotenv").config();
-const express = require("express"),
-  morgan = require("morgan"),
-  cors = require("cors"),
-  helmet = require("helmet"),
+require('dotenv').config();
+const express = require('express'),
+  morgan = require('morgan'),
+  cors = require('cors'),
+  helmet = require('helmet'),
   app = express(),
-  { NODE_ENV } = require("./config"),
-  authRouter = require("./auth/auth-router"),
-  usersRouter = require("./users/users-router"),
-  morganOption = NODE_ENV === "production" ? "tiny" : "common";
+  { NODE_ENV } = require('./config'),
+  authRouter = require('./auth/auth-router'),
+  usersRouter = require('./users/users-router'),
+  morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
-app.use("/api/auth", authRouter);
-app.use("/api/users", usersRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/users', usersRouter);
 
 app.get("/", (req, res) => {
   res.send("Welcome to the It Takes A Village");
