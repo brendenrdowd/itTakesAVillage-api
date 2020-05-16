@@ -26,7 +26,11 @@ StoryRouter.route("/story")
       .catch(next);
   })
   .post(bodyParser, (req, res, next) => {
-    for (const field of ["issue", "keyword", "author"]) {
+    const { issue, flag, author } = req.body;
+    const newStory = { issue, flag, author };
+    // old change
+    // for (const field of ["issue", "keyword", "author"]) {
+    for (const field of ["issue", "flag", "author"]) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
         return res.status(400).send({
@@ -34,8 +38,8 @@ StoryRouter.route("/story")
         });
       }
     }
-    const { issue, keyword, author } = req.body;
-    const newStory = { issue, keyword, author };
+    // const { issue, keyword, author } = req.body;
+    // const newStory = { issue, keyword, author };
 
     StoryService.insertStory(req.app.get("db"), newStory)
       .then((story) => {
@@ -43,7 +47,7 @@ StoryRouter.route("/story")
         res
           .status(201)
           .location(`/story/${story.id}`)
-          .json(serializeNote(story));
+          .json(serializeStory(story));
       })
       .catch(next);
   });

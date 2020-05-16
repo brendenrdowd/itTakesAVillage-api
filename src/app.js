@@ -4,6 +4,7 @@ const express = require("express"),
   cors = require("cors"),
   helmet = require("helmet"),
   app = express(),
+  usersRouter = require("./user/users-router"),
   { NODE_ENV } = require("./config");
 
 // const authRouter = require("./auth/auth-router");
@@ -18,6 +19,7 @@ app.use(cors());
 // app.use("/api/auth", authRouter);
 // left / off at the end on purpose
 app.use("/api", StoryRouter);
+app.use("/api/users", usersRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   let response;
