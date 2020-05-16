@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS itav_comments (
   created_at TIMESTAMP NOT NULL DEFAULT now()
 );
 
-CREATE TABLE IF NOT EXISTS itav_users (
+CREATE TABLE itav_users (
   id SERIAL PRIMARY KEY,
   email TEXT NOT NULL UNIQUE, 
   name TEXT NOT NULL, 
