@@ -6,10 +6,9 @@ const bodyParser = express.json()
 const serializeComment = (comment) => ({
   id: comment.id,
   content: comment.content,
-  date_modified: comment.date_modified,
 })
 
-CommentsRouter.route('/comment')
+CommentsRouter.route('/')
   .get((req, res, next) => {
     CommentsService.getAllComments(req.app.get('db'))
       .then((comment) => {
@@ -37,7 +36,7 @@ CommentsRouter.route('/comment')
       })
       .catch(next)
   })
-CommentsRouter.route('/comment/edit/:id')
+CommentsRouter.route('/edit/:id')
 
   .patch(bodyParser, (req, res, next) => {
     const { comment } = req.body;

@@ -17,7 +17,7 @@ const CommentsService = {
   deleteComment(knex, id) {
     return knex('itav_comments').where({id}).delete();
   },
-  editComment(knex, id, newComment) { //I'm not sure about proper name on this one!!!
+  editComment(knex, id, newComment) { 
     return knex('itav_comments').where({id}).update(newComment);
   },
 }
