@@ -1,58 +1,69 @@
-const express = require('express')
-const path = require('path')
-const UsersService = require('./users-service')
+const express = require("express");
+const path = require("path");
+const UsersService = require("./users-service");
 
-const usersRouter = express.Router()
-const jsonBodyParser = express.json()
+const usersRouter = express.Router();
+const jsonBodyParser = express.json();
+usersRouter.route("/").get((req, res, next) => {
+    UsersService.getAllUsers(req.app.get("db"))
+        .then((users) => {
+            res.json(users.map(UsersService.serializeUser));
+        })
+        .catch(next);
+});
+usersRouter.post("/", jsonBodyParser, (req, res, next) => {
+    // id SERIAL PRIMARY KEY,
+    // email TEXT NOT NULL UNIQUE,
+    // name TEXT NOT NULL,
+    // username TEXT NOT NULL UNIQUE,
+    // password TEXT NOT NULL,
+    // location TEXT NOT NULL
+    const { name, email, username, location, password } = req.body;
 
-usersRouter
-    .post('/', jsonBodyParser, (req, res, next) => {
-        const { password, username, full_name, nickname } = req.body
+    for (const field of ["name", "username", "password", "location", "email"])
+        if (!req.body[field])
+            return res.status(400).json({
+                error: `Missing '${field}' in request body`,
+            });
 
-        for (const field of ['full_name', 'username', 'password'])
-            if (!req.body[field])
-                return res.status(400).json({
-                    error: `Missing '${field}' in request body`
-                })
+    const passwordError = UsersService.validatePassword(password);
 
-        // TODO: check username doesn't start with spaces
+    if (passwordError) return res.status(400).json({ error: passwordError });
 
-        const passwordError = UsersService.validatePassword(password)
+    UsersService.hasUserWithUserName(req.app.get("db"), username)
+        .then((hasUserWithUserName) => {
+            if (hasUserWithUserName)
+                return res
+                    .status(400)
+                    .json({ error: `Username already taken` })
 
-        if (passwordError)
-            return res.status(400).json({ error: passwordError })
+            UsersService.hasUserWithEmail(req.app.get("db"), email)
+                .then((hasUserWithEmail) => {
+                    if (hasUserWithEmail) {
+                        return res.status(400).json({ error: "Email already taken" });
+                    }
+                });
 
-        UsersService.hasUserWithUserName(
-            req.app.get('db'),
-            username
-        )
-            .then(hasUserWithUserName => {
-                if (hasUserWithUserName)
-                    return res.status(400).json({ error: `Username already taken` })
+            // return UsersService.hashPassword(password).then((hashedPassword) => {
+            const newUser = {
+                username,
+                password,
+                name,
+                email,
+                location,
+            };
 
-                return UsersService.hashPassword(password)
-                    .then(hashedPassword => {
-                        const newUser = {
-                            username,
-                            password: hashedPassword,
-                            full_name,
-                            nickname,
-                            date_created: 'now()',
-                        }
+            return UsersService.insertUser(req.app.get("db"), newUser).then(
+                (user) => {
+                    res
+                        .status(201)
+                        .location(path.posix.join(req.originalUrl, `/${user.id}`))
+                        .json(UsersService.serializeUser(user));
+                }
+            );
+            // });
+        })
+        .catch(next);
+});
 
-                        return UsersService.insertUser(
-                            req.app.get('db'),
-                            newUser
-                        )
-                            .then(user => {
-                                res
-                                    .status(201)
-                                    .location(path.posix.join(req.originalUrl, `/${user.id}`))
-                                    .json(UsersService.serializeUser(user))
-                            })
-                    })
-            })
-            .catch(next)
-    })
-
-module.exports = usersRouter
+module.exports = usersRouter;
