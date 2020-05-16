@@ -1,7 +1,6 @@
 const express = require('express')
 const CommentsService = require('./comments-service')
 const CommentsRouter = express.Router();
-//const logger = require('morgan')
 const bodyParser = express.json()
 
 const serializeComment = (comment) => ({
@@ -18,20 +17,28 @@ CommentsRouter.route('/comment')
       })
       .catch(next);
   })
-  .post(bodyParser, (req, res, next) => { //what abouth auth to post the comment?
-    const { user_id, story_id, comment } = req.body
-    const newComment = { user_id, story_id, comment } //? 
+  .post(bodyParser, (req, res, next) => {
+    for (const field of ["user_id", "comment"]) {
+      if (!req.body[field]) {
+        return res.status(400).send({
+          error: { message: `${field} is required` },
+        })
+      }
+    }
+    const { user_id, comment } = req.body
+    const newComment = { user_id, comment } 
 
     CommentsService.insertComment(req.app.get('db'), newComment)
       .then((comment) => {
         res
           .status(201)
+          .location(`/comment/${comment.id}`)
           .json(serializeComment(comment))
       })
       .catch(next)
   })
-  CommentsRouter.route('/comment/edit/:id')
-  
+CommentsRouter.route('/comment/edit/:id')
+
   .patch(bodyParser, (req, res, next) => {
     const { comment } = req.body;
     const commentToUpdate = { comment };
@@ -46,8 +53,7 @@ CommentsRouter.route('/comment')
   .delete((req, res, next) => {
     const { id } = req.params;
     CommentsRouter.deleteComment(req.app.delete('db'), id)
-      .then( () => {
-        //logger.info(`Comment ${id} has been deleted`);
+      .then(() => {
         res.status(204).end();
       })
       .catch(next);

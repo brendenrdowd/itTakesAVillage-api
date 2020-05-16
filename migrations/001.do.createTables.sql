@@ -47,14 +47,6 @@ SET NULL;
 
 ALTER TABLE itav_comments
   ADD COLUMN
-<<<<<<< HEAD
     story INTEGER REFERENCES itav_stories(id)
     ON DELETE SET NULL;
 
-=======
-    story INTEGER REFERENCES itav_stories
-(id)
-    ON
-DELETE
-SET NULL;
->>>>>>> a0d49206b2ffe541c87954e1c41cf77f8f4ca26d

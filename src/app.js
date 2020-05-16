@@ -8,7 +8,7 @@ const express = require("express"),
 
 //const authRouter = require('./auth/auth-router')
 const CommentsRouter = require('./comments/comments-router')
-
+const StoryRouter = require('./story/story-router')
 const morganOption = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 
 
