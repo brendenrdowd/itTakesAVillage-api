@@ -1,20 +1,20 @@
-const express = require("express");
-const path = require("path");
-const UsersService = require("./users-service");
+const express = require('express');
+const path = require('path');
+const UsersService = require('./users-service');
 
 const usersRouter = express.Router();
 const jsonBodyParser = express.json();
-usersRouter.route("/").get((req, res, next) => {
-  UsersService.getAllUsers(req.app.get("db"))
+usersRouter.route('/').get((req, res, next) => {
+  UsersService.getAllUsers(req.app.get('db'))
     .then((users) => {
       res.json(users.map(UsersService.serializeUser));
     })
     .catch(next);
 });
-usersRouter.post("/", jsonBodyParser, (req, res, next) => {
+usersRouter.post('/', jsonBodyParser, (req, res, next) => {
   const { name, email, username, location, password } = req.body;
 
-  for (const field of ["name", "username", "password", "location", "email"])
+  for (const field of ['name', 'username', 'password', 'location', 'email'])
     if (!req.body[field])
       return res.status(400).json({
         error: `Missing '${field}' in request body`,
@@ -24,15 +24,15 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
 
   if (passwordError) return res.status(400).json({ error: passwordError });
 
-  UsersService.hasUserWithUserName(req.app.get("db"), username)
+  UsersService.hasUserWithUserName(req.app.get('db'), username)
     .then((hasUserWithUserName) => {
       if (hasUserWithUserName)
         return res.status(400).json({ error: `Username already taken` });
 
-      UsersService.hasUserWithEmail(req.app.get("db"), email).then(
+      UsersService.hasUserWithEmail(req.app.get('db'), email).then(
         (hasUserWithEmail) => {
           if (hasUserWithEmail) {
-            return res.status(400).json({ error: "Email already taken" });
+            return res.status(400).json({ error: 'Email already taken' });
           }
         }
       );
@@ -46,7 +46,7 @@ usersRouter.post("/", jsonBodyParser, (req, res, next) => {
         location,
       };
 
-      return UsersService.insertUser(req.app.get("db"), newUser).then(
+      return UsersService.insertUser(req.app.get('db'), newUser).then(
         (user) => {
           res
             .status(201)

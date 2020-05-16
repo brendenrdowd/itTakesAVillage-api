@@ -81,8 +81,8 @@ StoryRouter.route("/story/:id")
       .catch(next);
   })
   .patch(bodyParser, (req, res, next) => {
-    const { issue } = req.body;
-    const storyToUpdate = { issue };
+    const { issue, id } = req.body;
+    const storyToUpdate = { id };
 
     const numberOfValues = Object.numberOfValues(storyToUpdate).filter(Boolean)
       .length;
@@ -94,7 +94,7 @@ StoryRouter.route("/story/:id")
       });
     }
 
-    StoryService.updateStory(req.app.get("db"), req.params.id, storyToUpdate)
+    StoryService.updateStory(req.app.get("db"), id, issue)
       .then((numRowsAffected) => {
         res.status(204).end();
       })
