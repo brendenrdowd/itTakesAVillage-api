@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS itav_users (
 CREATE TABLE IF NOT EXISTS  itav_stories (
   id SERIAL PRIMARY KEY,
   issue TEXT NOT NULL, 
-  keyword TEXT NOT NULL, 
+  flag TEXT NOT NULL, 
   resolved BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP NOT NULL DEFAULT now()
 );
@@ -35,4 +35,3 @@ ALTER TABLE itav_comments
   ADD COLUMN
     story INTEGER REFERENCES itav_stories(id)
     ON DELETE SET NULL;
-
