@@ -4,6 +4,7 @@ const express = require("express"),
   cors = require("cors"),
   helmet = require("helmet"),
   app = express(),
+  usersRouter = require("./user/users-router"),
   { NODE_ENV } = require("./config");
 
 const CommentsRouter = require('./comments/comments-router')
@@ -18,8 +19,8 @@ app.use(cors());
 
 //app.use('/api/auth', authRouter)
 //app.use('api/users', UsersRouter)
+app.use('api/', StoryRouter)
 app.use('/api/comment', CommentsRouter)
-app.use('api/story', StoryRouter)
 app.use(function errorHandler(error, req, res, next) {
   let response
   if (process.env.NODE_ENV === 'production') {
