@@ -17,7 +17,7 @@ app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 
 app.get('/', (req, res) => {
-  res.send('Welcome to the GT Pro API!');
+  res.send('Welcome to the It Takes a Village API!');
 });
 
 app.use(function errorHandler(error, req, res, next) {
