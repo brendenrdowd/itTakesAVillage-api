@@ -6,7 +6,11 @@ const express = require('express'),
   app = express(),
   { NODE_ENV } = require('./config'),
   authRouter = require('./auth/auth-router'),
+<<<<<<< HEAD
   usersRouter = require('./user/users-router'),
+=======
+  usersRouter = require('./users/users-router'),
+>>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
   morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
 app.use(morgan(morganOption));
@@ -21,11 +25,18 @@ app.get('/', (req, res) => {
 });
 
 app.use(function errorHandler(error, req, res, next) {
+<<<<<<< HEAD
+=======
+  console.error(error);
+>>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
   let response;
   if (NODE_ENV === 'production') {
     response = { error: { message: 'server error' } };
   } else {
+<<<<<<< HEAD
     console.error(error);
+=======
+>>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
     response = { message: error.message, error };
   }
   res.status(500).json(response);

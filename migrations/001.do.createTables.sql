@@ -48,6 +48,7 @@ SET NULL;
 ALTER TABLE itav_comments
   ADD COLUMN
 <<<<<<< HEAD
+<<<<<<< HEAD
     story INTEGER REFERENCES itav_stories(id)
     ON DELETE SET NULL;
 
@@ -58,3 +59,7 @@ ALTER TABLE itav_comments
 DELETE
 SET NULL;
 >>>>>>> story-route
+=======
+    story INTEGER REFERENCES itav_stories(id)
+    ON DELETE SET NULL;
+>>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea

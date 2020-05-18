@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 // makeUsersArray
+=======
+// const bcrypt = require('bcryptjs');
+// const jwt = require('jsonwebtoken');
+
+>>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
 function makeUsersArray() {
   return [
     {
@@ -38,6 +44,7 @@ function makeUsersArray() {
     },
   ];
 }
+<<<<<<< HEAD
 // needs to be updated
 function makeStoriesArray(users) {
   return [
@@ -81,6 +88,46 @@ function makeStoryFixtures() {
 
   return { testUsers, testRecipes }
 }
+=======
+
+function makeFixtures() {
+  const testUsers = makeUsersArray();
+
+  return { testUsers };
+}
+
+// function makeExpectedThing(users, thing, reviews = []) {
+//   const user = users.find((user) => user.id === thing.user_id);
+
+//   const thingReviews = reviews.filter((review) => review.thing_id === thing.id);
+
+//   const number_of_reviews = thingReviews.length;
+//   const average_review_rating = calculateAverageReviewRating(thingReviews);
+
+//   return {
+//     id: thing.id,
+//     image: thing.image,
+//     title: thing.title,
+//     content: thing.content,
+//     date_created: thing.date_created,
+//     number_of_reviews,
+//     average_review_rating,
+//     user: {
+//       id: user.id,
+//       user_name: user.user_name,
+//       full_name: user.full_name,
+//       nickname: user.nickname,
+//       date_created: user.date_created,
+//     },
+//   };
+// }
+
+// function makeUsersFixtures() {
+//   const testUsers = makeUsersArray();
+
+//   return { testUsers };
+// }
+>>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
 
 function cleanTables(db) {
   return db.raw(
@@ -88,6 +135,7 @@ function cleanTables(db) {
       itav_users,
       itav_comments,
       itav_stories
+<<<<<<< HEAD
       RESTART IDENTITY CASCADE;`
   )
 }
@@ -115,3 +163,48 @@ module.exports = {
   seedUsers,
   makeAuthHeader,
 }
+=======
+      RESTART IDENTITY CASCADE`
+  );
+}
+
+// function seedUsers(db, users) {
+//   //   const preppedUsers = users.map((user) => ({
+//   //     ...user,
+//   //     password: bcrypt.hashSync(user.password, 1),
+//   //   }));
+
+//   return db
+//     .insert(users)
+//     .into('itav_users')
+//     .returning('*')
+//     .then(([user]) => user);
+// }
+
+// function seedThingsTables(db, users, things, reviews = []) {
+//   return db
+//     .into('thingful_users')
+//     .insert(users)
+//     .then(() =>
+//       db
+//         .into('thingful_things')
+//         .insert(things)
+//     )
+//     .then(() =>
+//       reviews.length && db.into('thingful_reviews').insert(reviews)
+//     )
+// }
+
+// function seedMaliciousThing(db, user, thing) {
+//   return seedUsers(db, [user]).then(() =>
+//     db.into('thingful_things').insert([thing])
+//   );
+// }
+
+module.exports = {
+  makeUsersArray,
+  makeFixtures,
+  cleanTables,
+  //   seedUsers,
+};
+>>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
