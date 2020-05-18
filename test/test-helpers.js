@@ -6,21 +6,37 @@ function makeUsersArray() {
   return [
     {
       id: 1,
-      email: 'test1@gmail.com',
+      username: 'test-user-1',
       name: 'Test user 1',
-      password: 'Password1',
-      username:"tester1",
-      location:91210
+      email: 'example@email.com',
+      password: 'Password123',
+      location: ' 94601',
     },
     {
       id: 2,
-      email: 'test2@gmail.com',
+      username: 'test-user-2',
       name: 'Test user 2',
-      password: 'Password2',
-      username:"test2",
-      location:91210
-    }
-  ]
+      email: 'example2@email.com',
+      password: 'Password123',
+      location: '94601',
+    },
+    {
+      id: 3,
+      username: 'test-user-3',
+      name: 'Test user 3',
+      email: 'example3@email.com',
+      password: 'Password123',
+      location: ' 94601',
+    },
+    {
+      id: 4,
+      username: 'test-user-4',
+      name: 'Test user 4',
+      email: 'example4@email.com',
+      password: 'Password123',
+      location: '94601',
+    },
+  ];
 }
 // needs to be updated
 function makeStoriesArray(users) {
@@ -44,16 +60,16 @@ function makeStoriesArray(users) {
 function makeCommentsArray(users) {
   return [
     {
-      
+
     },
     {
-      
+
     },
     {
-    
+
     },
     {
-      
+
     },
   ]
 }
@@ -61,7 +77,7 @@ function makeCommentsArray(users) {
 function makeStoryFixtures() {
   const testUsers = makeUsersArray()
   const testStories = makeStoriesArray(testUsers)
-  const testComments = makeCommentsArray(testUsers,testStories)
+  const testComments = makeCommentsArray(testUsers, testStories)
 
   return { testUsers, testRecipes }
 }
