@@ -13,3 +13,10 @@
 {"message":"story with id 1 has been created!","level":"info"}
 {"message":"story with id 2 has been created!","level":"info"}
 {"message":"flag is required","level":"error"}
+{"message":"story with id 5 has been created!","level":"info"}
+{"message":"story with id 6 has been created!","level":"info"}
+{"message":"story with id 7 has been created!","level":"info"}
+{"message":"story with id 3 not found!","level":"error"}
+{"message":"story with id 3 not found!","level":"error"}
+{"message":"story with id 8 has been created!","level":"info"}
+{"message":"story with id 3 not found!","level":"error"}
