@@ -1,69 +1,48 @@
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 // makeUsersArray
 function makeUsersArray() {
   return [
     {
       id: 1,
-      email: 'test1@gmail.com',
+      username: 'test-user-1',
       name: 'Test user 1',
-      password: 'Password1',
-      username:"tester1",
-      location:91210
+      email: 'example@email.com',
+      password: 'Password123',
+      location: ' 94601',
     },
     {
       id: 2,
-      email: 'test2@gmail.com',
+      username: 'test-user-2',
       name: 'Test user 2',
-      password: 'Password2',
-      username:"test2",
-      location:91210
-    }
-  ]
-}
-// needs to be updated
-function makeStoriesArray(users) {
-  return [
-    {
-
+      email: 'example2@email.com',
+      password: 'Password123',
+      location: '94601',
     },
     {
-
+      id: 3,
+      username: 'test-user-3',
+      name: 'Test user 3',
+      email: 'example3@email.com',
+      password: 'Password123',
+      location: ' 94601',
     },
     {
-
+      id: 4,
+      username: 'test-user-4',
+      name: 'Test user 4',
+      email: 'example4@email.com',
+      password: 'Password123',
+      location: '94601',
     },
-    {
-
-    },
-  ]
-}
-
-// needs to be updated
-function makeCommentsArray(users) {
-  return [
-    {
-      
-    },
-    {
-      
-    },
-    {
-    
-    },
-    {
-      
-    },
-  ]
+  ];
 }
 
-function makeStoryFixtures() {
-  const testUsers = makeUsersArray()
-  const testStories = makeStoriesArray(testUsers)
-  const testComments = makeCommentsArray(testUsers,testStories)
+function makeFixtures() {
+  const testUsers = makeUsersArray();
 
-  return { testUsers, testRecipes }
+  return { testUsers };
 }
 
 function cleanTables(db) {
@@ -72,30 +51,26 @@ function cleanTables(db) {
       itav_users,
       itav_comments,
       itav_stories
-      RESTART IDENTITY CASCADE;`
-  )
+      RESTART IDENTITY CASCADE`
+  );
 }
 
 function seedUsers(db, users) {
-  const hashedUsers = users.map(user => ({
+  const preppedUsers = users.map((user) => ({
     ...user,
-    password: bcrypt.hashSync(user.password, 1)
-  }))
-  return db.into('itav_users').insert(hashedUsers)
-}
+    password: bcrypt.hashSync(user.password, 1),
+  }));
 
-function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
-  const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.name,
-    algorithm: 'HS256',
-  })
-  return `Bearer ${token}`
+  return db
+    .into('itav_users')
+    .insert(preppedUsers)
+    .returning('*')
+    .then(([user]) => user);
 }
 
 module.exports = {
   makeUsersArray,
-  makeStoryFixtures,
+  makeFixtures,
   cleanTables,
   seedUsers,
-  makeAuthHeader,
-}
+};
