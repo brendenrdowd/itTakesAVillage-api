@@ -31,19 +31,13 @@ IF NOT EXISTS  itav_stories
 
 ALTER TABLE itav_stories
   ADD COLUMN
-    author INTEGER REFERENCES itav_users
-(id)
-    ON
-DELETE
-SET NULL;
+    author INTEGER REFERENCES itav_users(id)
+    ON DELETE SET NULL;
 
 ALTER TABLE itav_comments
   ADD COLUMN
-    author INTEGER REFERENCES itav_users
-(id)
-    ON
-DELETE
-SET NULL;
+    author INTEGER REFERENCES itav_users(id)
+    ON DELETE SET NULL;
 
 ALTER TABLE itav_comments
   ADD COLUMN

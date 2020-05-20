@@ -4,6 +4,7 @@ const UsersService = require('./users-service');
 
 const usersRouter = express.Router();
 const jsonBodyParser = express.json();
+
 usersRouter.route('/').get((req, res, next) => {
   UsersService.getAllUsers(req.app.get('db'))
     .then((users) => {
@@ -37,24 +38,24 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
         }
       );
 
-      // return UsersService.hashPassword(password).then((hashedPassword) => {
-      const newUser = {
-        username,
-        password,
-        name,
-        email,
-        location,
-      };
+      return UsersService.hashPassword(password).then((hashedPassword) => {
+        const newUser = {
+          username,
+          password: hashedPassword,
+          name,
+          email,
+          location,
+        };
 
-      return UsersService.insertUser(req.app.get('db'), newUser).then(
-        (user) => {
-          res
-            .status(201)
-            .location(path.posix.join(req.originalUrl, `/${user.id}`))
-            .json(UsersService.serializeUser(user));
-        }
-      );
-      // });
+        return UsersService.insertUser(req.app.get('db'), newUser).then(
+          (user) => {
+            res
+              .status(201)
+              .location(path.posix.join(req.originalUrl, `/${user.id}`))
+              .json(UsersService.serializeUser(user));
+          }
+        );
+      });
     })
     .catch(next);
 });

@@ -1,9 +1,9 @@
 const knex = require('knex');
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const app = require('../src/app');
 const helpers = require('./test-helpers');
 
-describe.only('Users Endpoints', function () {
+describe('Users Endpoints', function () {
   let db;
 
   const { testUsers } = helpers.makeFixtures();
@@ -27,6 +27,7 @@ describe.only('Users Endpoints', function () {
     context(`User Validation`, () => {
       beforeEach('insert users', () => {
         return db.into('itav_users').insert(testUsers);
+        helpers.seedUsers(db, testUsers);
       });
 
       const requiredFields = [
@@ -182,7 +183,7 @@ describe.only('Users Endpoints', function () {
                 expect(row.name).to.eql(newUser.name);
                 expect(row.email).to.eql(newUser.email);
                 expect(row.location).to.eql(newUser.location);
-                return newUser.password === row.password;
+                return bcrypt.compare(newUser.password, row.password);
               })
               .then((compareMatch) => {
                 expect(compareMatch).to.be.true;

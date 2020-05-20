@@ -1,13 +1,8 @@
-<<<<<<< HEAD
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 // makeUsersArray
-=======
-// const bcrypt = require('bcryptjs');
-// const jwt = require('jsonwebtoken');
-
->>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
 function makeUsersArray() {
   return [
     {
@@ -44,23 +39,42 @@ function makeUsersArray() {
     },
   ];
 }
-<<<<<<< HEAD
 // needs to be updated
 function makeStoriesArray(users) {
   return [
     {
 
+      username: "test-user-1",
+      name: "Test user 1",
+      email: "example@email.com",
+      password: "Password123",
+      location: " 94601",
     },
     {
-
+      id: 2,
+      username: "test-user-2",
+      name: "Test user 2",
+      email: "example2@email.com",
+      password: "Password123",
+      location: "94601",
     },
     {
-
+      id: 3,
+      username: "test-user-3",
+      name: "Test user 3",
+      email: "example3@email.com",
+      password: "Password123",
+      location: " 94601",
     },
     {
-
+      id: 4,
+      username: "test-user-4",
+      name: "Test user 4",
+      email: "example4@email.com",
+      password: "Password123",
+      location: "94601",
     },
-  ]
+  ];
 }
 
 // needs to be updated
@@ -88,12 +102,17 @@ function makeStoryFixtures() {
 
   return { testUsers, testRecipes }
 }
-=======
 
 function makeFixtures() {
-  const testUsers = makeUsersArray();
+  return [{}, {}, {}, {}];
+}
 
-  return { testUsers };
+function makeStoryFixtures() {
+  const testUsers = makeUsersArray();
+  const testStories = makeStoriesArray(testUsers);
+  const testComments = makeCommentsArray(testUsers, testStories);
+
+  return { testUsers, testRecipes };
 }
 
 // function makeExpectedThing(users, thing, reviews = []) {
@@ -127,7 +146,6 @@ function makeFixtures() {
 
 //   return { testUsers };
 // }
->>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
 
 function cleanTables(db) {
   return db.raw(
@@ -135,25 +153,28 @@ function cleanTables(db) {
       itav_users,
       itav_comments,
       itav_stories
-<<<<<<< HEAD
       RESTART IDENTITY CASCADE;`
   )
+
+  RESTART IDENTITY CASCADE`
+  );
+
 }
 
 function seedUsers(db, users) {
-  const hashedUsers = users.map(user => ({
+  const hashedUsers = users.map((user) => ({
     ...user,
-    password: bcrypt.hashSync(user.password, 1)
-  }))
-  return db.into('itav_users').insert(hashedUsers)
+    password: bcrypt.hashSync(user.password, 1),
+  }));
+  return db.into("itav_users").insert(hashedUsers);
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.name,
-    algorithm: 'HS256',
-  })
-  return `Bearer ${token}`
+    algorithm: "HS256",
+  });
+  return `Bearer ${ token } `;
 }
 
 module.exports = {
@@ -162,8 +183,6 @@ module.exports = {
   cleanTables,
   seedUsers,
   makeAuthHeader,
-}
-=======
       RESTART IDENTITY CASCADE`
   );
 }
@@ -207,4 +226,4 @@ module.exports = {
   cleanTables,
   //   seedUsers,
 };
->>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
+

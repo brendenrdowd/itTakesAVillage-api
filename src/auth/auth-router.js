@@ -14,35 +14,40 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
       return res.status(400).json({
         error: `Missing '${key}' in request body`,
       });
+
   AuthService.getUserWithUserName(req.app.get('db'), loginUser.username)
     .then((dbUser) => {
-      if (!dbUser) {
+      if (!dbUser)
         return res.status(400).json({
           error: 'Incorrect username or password ',
         });
-      }
-      // AuthService.comparePasswords(loginUser.password, dbUser.password);
-      if (loginUser.password !== dbUser.password) {
-        return res.status(400).json({
-          error: 'Incorrect username or password',
-        });
-      }
 
-      const sub = dbUser.username;
-      const payload = { user_id: dbUser.id };
-      const userId = dbUser.id;
-      res.send({
-        authToken: AuthService.createJwt(sub, payload),
-        userId,
+      return AuthService.comparePasswords(
+        loginUser.password,
+        dbUser.password
+      ).then((compareMatch) => {
+        if (!compareMatch)
+          return res.status(400).json({
+            error: 'Incorrect username or password',
+          });
+        const sub = dbUser.username;
+        const payload = { user_id: dbUser.id };
+        const userId = dbUser.id;
+        res.send({
+          authToken: AuthService.createJwt(sub, payload),
+          userId,
+        });
       });
     })
     .catch(next);
 });
+
 authRouter.post('/refresh', requireAuth, (req, res) => {
   const sub = req.user.username;
-  const payload = { id: req.user.id };
+  const payload = { user_id: req.user.id };
   res.send({
     authToken: AuthService.createJwt(sub, payload),
   });
 });
+
 module.exports = authRouter;
