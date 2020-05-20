@@ -13,10 +13,6 @@ const express = require('express'),
   usersRouter = require('./users/users-router'),
   morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
-const UsersRouter = require("./user/users-router")
-const CommentsRouter = require('./comments/comments-router')
-const StoryRouter = require('./story/story-router')
-const morganOption = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 //const authRouter = require('./auth/jwt-auth')
 
 app.use(morgan(morganOption));
