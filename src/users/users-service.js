@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const xss = require('xss');
+const validator = require('validator');
 
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
 
@@ -25,6 +26,11 @@ const UsersService = {
       .into('itav_users')
       .returning('*')
       .then(([user]) => user);
+  },
+  validateEmail(email) {
+    if (!validator.isEmail(email)) {
+      return 'Invalid email address';
+    }
   },
   validatePassword(password) {
     if (password.length < 8) {

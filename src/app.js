@@ -5,10 +5,10 @@ const express = require('express'),
   helmet = require('helmet'),
   app = express(),
   { NODE_ENV } = require('./config'),
-  UsersRouter = require('./user/users-router'),
+  usersRouter = require('./users/users-router'),
   CommentsRouter = require('./comments/comments-router'),
   StoryRouter = require('./story/story-router'),
-  authRouter = require('./auth/jwt-auth'),
+  authRouter = require('../src/auth/auth-router'),
   morganOption = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 
 app.use(morgan(morganOption));
@@ -22,7 +22,6 @@ app.get('/', (req, res) => {
 app.use('/api/auth', authRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/', StoryRouter);
-app.use('/api/user', UsersRouter);
 app.use('/api/comment', CommentsRouter);
 
 app.use(function errorHandler(error, req, res, next) {
