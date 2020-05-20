@@ -17,7 +17,7 @@ const serializeStory = (story) => ({
   resolved: story.resolved,
 });
 
-StoryRouter.route("/story")
+StoryRouter.route("/")
   .get((req, res, next) => {
     StoryService.getAllStories(req.app.get("db"))
       .then((story) => {
@@ -52,7 +52,7 @@ StoryRouter.route("/story")
       .catch(next);
   });
 
-StoryRouter.route("/story/:id")
+StoryRouter.route("/:id")
   .all((req, res, next) => {
     const { id } = req.params;
     StoryService.getById(req.app.get("db"), id)
