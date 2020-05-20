@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=12.14.0",
+    "npm": ">=6.13.4"
+  },
   "scripts": {
     "test": "mocha --require test/setup.js",
     "dev": "nodemon src/server.js",
