@@ -21,7 +21,3 @@ const AuthService = {
   },
 };
 module.exports = AuthService;
-<<<<<<< HEAD
-=======
-
->>>>>>> 14f12517446995266bfc9b18d3db966def7cc5ea
