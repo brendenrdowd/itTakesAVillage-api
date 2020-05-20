@@ -1,4 +1,4 @@
-// const bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 // const jwt = require('jsonwebtoken');
 
 function makeUsersArray() {
@@ -44,38 +44,6 @@ function makeFixtures() {
   return { testUsers };
 }
 
-// function makeExpectedThing(users, thing, reviews = []) {
-//   const user = users.find((user) => user.id === thing.user_id);
-
-//   const thingReviews = reviews.filter((review) => review.thing_id === thing.id);
-
-//   const number_of_reviews = thingReviews.length;
-//   const average_review_rating = calculateAverageReviewRating(thingReviews);
-
-//   return {
-//     id: thing.id,
-//     image: thing.image,
-//     title: thing.title,
-//     content: thing.content,
-//     date_created: thing.date_created,
-//     number_of_reviews,
-//     average_review_rating,
-//     user: {
-//       id: user.id,
-//       user_name: user.user_name,
-//       full_name: user.full_name,
-//       nickname: user.nickname,
-//       date_created: user.date_created,
-//     },
-//   };
-// }
-
-// function makeUsersFixtures() {
-//   const testUsers = makeUsersArray();
-
-//   return { testUsers };
-// }
-
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -86,42 +54,22 @@ function cleanTables(db) {
   );
 }
 
-// function seedUsers(db, users) {
-//   //   const preppedUsers = users.map((user) => ({
-//   //     ...user,
-//   //     password: bcrypt.hashSync(user.password, 1),
-//   //   }));
+function seedUsers(db, users) {
+  const preppedUsers = users.map((user) => ({
+    ...user,
+    password: bcrypt.hashSync(user.password, 1),
+  }));
 
-//   return db
-//     .insert(users)
-//     .into('itav_users')
-//     .returning('*')
-//     .then(([user]) => user);
-// }
-
-// function seedThingsTables(db, users, things, reviews = []) {
-//   return db
-//     .into('thingful_users')
-//     .insert(users)
-//     .then(() =>
-//       db
-//         .into('thingful_things')
-//         .insert(things)
-//     )
-//     .then(() =>
-//       reviews.length && db.into('thingful_reviews').insert(reviews)
-//     )
-// }
-
-// function seedMaliciousThing(db, user, thing) {
-//   return seedUsers(db, [user]).then(() =>
-//     db.into('thingful_things').insert([thing])
-//   );
-// }
+  return db
+    .into('itav_users')
+    .insert(preppedUsers)
+    .returning('*')
+    .then(([user]) => user);
+}
 
 module.exports = {
   makeUsersArray,
   makeFixtures,
   cleanTables,
-  //   seedUsers,
+  seedUsers,
 };
