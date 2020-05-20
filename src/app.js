@@ -8,7 +8,7 @@ const express = require('express'),
   UsersRouter = require('./user/users-router'),
   CommentsRouter = require('./comments/comments-router'),
   StoryRouter = require('./story/story-router'),
-  authRouter = require('./auth/jwt-auth'),
+  authRouter = require('./auth/auth-router'),
   morganOption = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 
 app.use(morgan(morganOption));
@@ -20,10 +20,9 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/auth', authRouter);
-app.use('/api/users', usersRouter);
-app.use('/api/', StoryRouter);
-app.use('/api/user', UsersRouter);
-app.use('/api/comment', CommentsRouter);
+app.use('/api/users', UsersRouter);
+app.use('/api/stories', StoryRouter);
+app.use('/api/comments', CommentsRouter);
 
 app.use(function errorHandler(error, req, res, next) {
   console.error(error);

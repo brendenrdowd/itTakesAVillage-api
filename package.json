@@ -11,7 +11,7 @@
     "test": "mocha --require test/setup.js",
     "dev": "nodemon src/server.js",
     "seed": "psql -d village -f ./seeds/seed.itavUsers.sql -f ./seeds/seed.itavStories.sql -f ./seeds/seed.itavComments.sql",
-    "seed:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL)",
+    "seed:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run seed",
     "migrate": "postgrator --config postgrator-config.js",
     "migrate:test": "env NODE_ENV=test npm run migrate",
     "migrate:production": "env SSL=true DATABASE_URL=$(heroku config:get DATABASE_URL) npm run migrate",

@@ -31,41 +31,16 @@ IF NOT EXISTS  itav_stories
 
 ALTER TABLE itav_stories
   ADD COLUMN
-    author INTEGER REFERENCES itav_users
-(id)
-    ON
-DELETE
-SET NULL;
+    author INTEGER REFERENCES itav_users(id)
+    ON DELETE SET NULL;
 
 ALTER TABLE itav_comments
   ADD COLUMN
-    author INTEGER REFERENCES itav_users
-(id)
-    ON
-DELETE
-SET NULL;
+    author INTEGER REFERENCES itav_users(id)
+    ON DELETE SET NULL;
 
 ALTER TABLE itav_comments
   ADD COLUMN
-<<<<<<< HEAD
-<<<<<<< HEAD
     story INTEGER REFERENCES itav_stories(id)
     ON DELETE SET NULL;
 
-=======
-<<<<<<< HEAD
-    story INTEGER REFERENCES itav_stories(id)
-    ON DELETE SET NULL;
-
-=======
-    story INTEGER REFERENCES itav_stories
-(id)
-    ON
-DELETE
-SET NULL;
->>>>>>> story-route
->>>>>>> d8c91e251a2d919238558fe838a93bdc08267a41
-=======
-    story INTEGER REFERENCES itav_stories(id)
-    ON DELETE SET NULL;
->>>>>>> rupi-fernando
