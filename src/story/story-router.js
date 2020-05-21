@@ -17,7 +17,7 @@ const serializeStory = (story) => ({
   resolved: story.resolved,
 });
 
-StoryRouter.route("/story")
+StoryRouter.route("/")
   .get((req, res, next) => {
     StoryService.getAllStories(req.app.get("db"))
       .then((story) => {
@@ -52,7 +52,7 @@ StoryRouter.route("/story")
       .catch(next);
   });
 
-StoryRouter.route("/story/:id")
+StoryRouter.route("/:id")
   .all((req, res, next) => {
     const { id } = req.params;
     StoryService.getById(req.app.get("db"), id)
@@ -82,8 +82,8 @@ StoryRouter.route("/story/:id")
       .catch(next);
   })
   .patch(bodyParser, (req, res, next) => {
-    const { issue } = req.body;
-    const storyToUpdate = { issue };
+    const { issue, id } = req.body;
+    const storyToUpdate = { id };
 
     const numberOfValues = Object.numberOfValues(storyToUpdate).filter(Boolean)
       .length;
@@ -95,7 +95,7 @@ StoryRouter.route("/story/:id")
       });
     }
 
-    StoryService.updateStory(req.app.get("db"), req.params.id, storyToUpdate)
+    StoryService.updateStory(req.app.get("db"), id, issue)
       .then((numRowsAffected) => {
         res.status(204).end();
       })
