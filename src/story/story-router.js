@@ -3,6 +3,7 @@ const StoryService = require("./story-service");
 const logger = require("../logger");
 const StoryRouter = express.Router();
 const bodyParser = express.json();
+const { requireAuth } = require("../middleware/jwt-auth");
 
 const serializeStory = (story) => ({
   id: story.id,
@@ -18,19 +19,19 @@ const serializeStory = (story) => ({
 });
 
 StoryRouter.route("/")
-  .get((req, res, next) => {
-    StoryService.getAllStories(req.app.get("db"))
+  .get(requireAuth, (req, res, next) => {
+    StoryService.getAllStories(req.app.get("db"), req.user.id)
       .then((story) => {
         res.json(story.map(serializeStory));
       })
       .catch(next);
   })
-  .post(bodyParser, (req, res, next) => {
-    const { issue, flag, author } = req.body;
+  .post(bodyParser, requireAuth, (req, res, next) => {
+    const { issue, flag } = req.body;
+    const author = req.user.id;
     const newStory = { issue, flag, author };
-    // old change
-    // for (const field of ["issue", "keyword", "author"]) {
-    for (const field of ["issue", "flag", "author"]) {
+
+    for (const field of ["issue", "flag"]) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
         return res.status(400).send({
@@ -38,8 +39,6 @@ StoryRouter.route("/")
         });
       }
     }
-    // const { issue, keyword, author } = req.body;
-    // const newStory = { issue, keyword, author };
 
     StoryService.insertStory(req.app.get("db"), newStory)
       .then((story) => {

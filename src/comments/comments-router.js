@@ -2,6 +2,7 @@ const express = require('express')
 const CommentsService = require('./comments-service')
 const CommentsRouter = express.Router();
 const bodyParser = express.json()
+const {requireAuth} = require('../middleware/jwt-auth')
 
 const serializeComment = (comment) => ({
   id: comment.id,
@@ -9,8 +10,8 @@ const serializeComment = (comment) => ({
 })
 
 CommentsRouter.route('/')
-  .get((req, res, next) => {
-    CommentsService.getAllComments(req.app.get('db'))
+  .get(requireAuth, (req, res, next) => {
+    CommentsService.getAllComments(req.app.get('db'), req.user.id)
       .then((comment) => {
         res.json(comment.map(serializeComment))
       })
@@ -18,17 +19,18 @@ CommentsRouter.route('/')
   })
 
 
-  .post(bodyParser, (req, res, next) => {
-    const { author, comment, story} = req.body
+  .post(bodyParser, requireAuth, (req, res, next) => {
+    const {comment, story} = req.body
+    const author = req.user.id
+    const newComment = { author, story , comment }
     console.log(req.body)
-    for (const field of ["author", "comment", "story"]) {
+    for (const field of ["comment", "story"]) {
       if (!req.body[field]) {
         return res.status(400).send({
           error: { message: `${field} is required` },
         })
       }
     }
-    const newComment = { author, comment }
     CommentsService.insertComment(req.app.get('db'), newComment)
       .then((comment) => {
         res
