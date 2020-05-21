@@ -26,44 +26,51 @@ function makeUsersArray() {
 function makeStoriesArray(users) {
   return [
     {
-
+      // id: 1,
+      // issue: "test food",
+      // created_at: new Date(),
+      // author: users,
+      // keyword: "groceries",
+      // resolved: false,
     },
     {
-
+      // id: 2,
+      // issue: "test 2 food",
+      // created_at: new Date(),
+      // author: users,
+      // keyword: "food offer",
+      // resolved: false,
     },
     {
-
+      // id: 3,
+      // issue: "test ride",
+      // created_at: new Date(),
+      // author: users,
+      // keyword: "rideshare",
+      // resolved: false,
     },
     {
-
+      // id: 4,
+      // issue: "test transportation",
+      // created_at: new Date(),
+      // author: users,
+      // keyword: "transportation",
+      // resolved: false,
     },
-  ]
+  ];
 }
 
 // needs to be updated
 function makeCommentsArray(users) {
-  return [
-    {
-      
-    },
-    {
-      
-    },
-    {
-    
-    },
-    {
-      
-    },
-  ]
+  return [{}, {}, {}, {}];
 }
 
 function makeStoryFixtures() {
-  const testUsers = makeUsersArray()
-  const testStories = makeStoriesArray(testUsers)
-  const testComments = makeCommentsArray(testUsers,testStories)
+  const testUsers = makeUsersArray();
+  const testStories = makeStoriesArray(testUsers);
+  const testComments = makeCommentsArray(testUsers, testStories);
 
-  return { testUsers, testRecipes }
+  return { testUsers, testRecipes };
 }
 
 function cleanTables(db) {
@@ -73,23 +80,23 @@ function cleanTables(db) {
       itav_comments,
       itav_stories
       RESTART IDENTITY CASCADE;`
-  )
+  );
 }
 
 function seedUsers(db, users) {
-  const hashedUsers = users.map(user => ({
+  const hashedUsers = users.map((user) => ({
     ...user,
-    password: bcrypt.hashSync(user.password, 1)
-  }))
-  return db.into('itav_users').insert(hashedUsers)
+    password: bcrypt.hashSync(user.password, 1),
+  }));
+  return db.into("itav_users").insert(hashedUsers);
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.name,
-    algorithm: 'HS256',
-  })
-  return `Bearer ${token}`
+    algorithm: "HS256",
+  });
+  return `Bearer ${token}`;
 }
 
 module.exports = {
@@ -98,4 +105,4 @@ module.exports = {
   cleanTables,
   seedUsers,
   makeAuthHeader,
-}
+};

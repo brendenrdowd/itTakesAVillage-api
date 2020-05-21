@@ -19,9 +19,9 @@ CommentsRouter.route('/')
 
 
   .post(bodyParser, (req, res, next) => {
-    const { author, comment } = req.body
+    const { author, comment, story} = req.body
     console.log(req.body)
-    for (const field of ["author", "comment"]) {
+    for (const field of ["author", "comment", "story"]) {
       if (!req.body[field]) {
         return res.status(400).send({
           error: { message: `${field} is required` },

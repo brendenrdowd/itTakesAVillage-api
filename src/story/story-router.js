@@ -57,6 +57,7 @@ StoryRouter.route("/:id")
     const { id } = req.params;
     StoryService.getById(req.app.get("db"), id)
       .then((story) => {
+        console.log(id);
         if (!story) {
           logger.error(`story with id ${id} not found!`);
           return res.status(404).json({
