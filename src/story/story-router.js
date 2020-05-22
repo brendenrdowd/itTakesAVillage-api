@@ -13,7 +13,7 @@ const serializeStory = (story) => ({
   // in place of folder_id
   author: story.author,
   // in place of content
-  keyword: story.keyword,
+  flag: story.flag,
   // need to add
   resolved: story.resolved,
 });
