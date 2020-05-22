@@ -147,17 +147,35 @@ function makeStoryFixtures() {
 //   return { testUsers };
 // }
 
-// function cleanTables(db) {
-//   return db.raw(
-//     `TRUNCATE
-//       itav_users,
-//       itav_comments,
-//       itav_stories
-//       RESTART IDENTITY CASCADE;`
-//   ) 
-  
-//   RESTART IDENTITY CASCADE`
-//   );
+function cleanTables(db) {
+  return db.raw(
+    `TRUNCATE
+      itav_users,
+      itav_comments,
+      itav_stories
+      RESTART IDENTITY CASCADE;`
+  )
+    
+  RESTART IDENTITY CASCADE`
+  );
+
+}
+
+function seedUsers(db, users) {
+  const hashedUsers = users.map((user) => ({
+    ...user,
+    password: bcrypt.hashSync(user.password, 1),
+  }));
+  return db.into("itav_users").insert(hashedUsers);
+}
+
+function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+  const token = jwt.sign({ user_id: user.id }, secret, {
+    subject: user.name,
+    algorithm: "HS256",
+  });
+  return `Bearer ${ token } `;
+}
 
 // };
 

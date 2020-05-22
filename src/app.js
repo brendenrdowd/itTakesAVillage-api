@@ -17,7 +17,6 @@ app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
 
-
 app.get("/", (req, res) => {
   res.send("Welcome to the It Takes a Village API!");
 });
