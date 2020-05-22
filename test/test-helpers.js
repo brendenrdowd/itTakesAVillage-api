@@ -54,7 +54,13 @@ function cleanTables(db) {
       RESTART IDENTITY CASCADE`
   );
 }
-
+function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+  const token = jwt.sign({ user_id: user.id }, secret, {
+    subject: user.username,
+    algorithm: 'HS256',
+  });
+  return `Bearer ${token}`;
+}
 function seedUsers(db, users) {
   const preppedUsers = users.map((user) => ({
     ...user,
@@ -64,7 +70,6 @@ function seedUsers(db, users) {
   return db
     .into('itav_users')
     .insert(preppedUsers)
-    .returning('*')
     .then(([user]) => user);
 }
 
@@ -73,4 +78,5 @@ module.exports = {
   makeFixtures,
   cleanTables,
   seedUsers,
+  makeAuthHeader,
 };
