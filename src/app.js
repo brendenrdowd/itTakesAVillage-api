@@ -5,11 +5,10 @@ const express = require("express"),
   helmet = require("helmet"),
   app = express(),
   { NODE_ENV } = require("./config"),
-  UsersRouter = require("./user/users-router"),
   CommentsRouter = require("./comments/comments-router"),
   StoryRouter = require("./story/story-router"),
   authRouter = require("./auth/auth-router"),
-  usersRouter = require("./users/users-router"),
+  UsersRouter = require("./users/users-router"),
   morganOption = NODE_ENV === "production" ? "tiny" : "common";
 
 //const authRouter = require('./auth/jwt-auth')
@@ -17,8 +16,7 @@ const express = require("express"),
 app.use(morgan(morganOption));
 app.use(helmet());
 app.use(cors());
-app.use("/api/auth", authRouter);
-app.use("/api/users", usersRouter);
+
 
 app.get("/", (req, res) => {
   res.send("Welcome to the It Takes a Village API!");
