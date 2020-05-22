@@ -2,6 +2,9 @@ const CommentsService = {
   getAllComments(knex) {
     return knex.select('*').from('itav_comments');
   },
+  getCommentByStoryId(knex, story) {
+    return knex.select('*').from('itav_comments').where({story})
+  },
   getById(knex, id) {
     return knex.from('itav_comments').select('*').where({id}).first();
   },
