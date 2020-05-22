@@ -8,7 +8,8 @@ const express = require('express'),
   CommentsRouter = require('./comments/comments-router'),
   StoryRouter = require('./story/story-router'),
   authRouter = require('./auth/auth-router'),
-  morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
+  usersRouter = require('./users/users-router');
+morganOption = NODE_ENV === 'production' ? 'tiny' : 'common';
 
 //const authRouter = require('./auth/jwt-auth')
 
