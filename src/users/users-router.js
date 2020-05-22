@@ -22,7 +22,6 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
       });
 
   const passwordError = UsersService.validatePassword(password);
-  // const validateEmail = UsersService.validatePassword(email);
 
   if (passwordError) return res.status(400).json({ error: passwordError });
 
