@@ -155,7 +155,7 @@ function cleanTables(db) {
       itav_stories
       RESTART IDENTITY CASCADE;`
   )
-
+    
   RESTART IDENTITY CASCADE`
   );
 
