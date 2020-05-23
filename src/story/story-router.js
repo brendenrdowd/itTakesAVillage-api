@@ -19,13 +19,16 @@ const serializeStory = (story) => ({
 });
 
 StoryRouter.route("/")
+  // .get((req, res, next) => {
   .get(requireAuth, (req, res, next) => {
     StoryService.getAllStories(req.app.get("db"), req.user.id)
+      // StoryService.getAllStories(req.app.get("db"))
       .then((story) => {
         res.json(story.map(serializeStory));
       })
       .catch(next);
   })
+  // .post(bodyParser, (req, res, next) => {
   .post(bodyParser, requireAuth, (req, res, next) => {
     const { issue, flag } = req.body;
     const author = req.user.id;
