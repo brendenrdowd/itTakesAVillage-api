@@ -6,7 +6,7 @@ const { requireAuth } = require('../middleware/jwt-auth')
 
 const serializeComment = (comment) => ({
   id: comment.id,
-  content: comment.content,
+  comment: comment.comment,
   author: comment.author,
 
 })
@@ -21,7 +21,7 @@ CommentsRouter.route('/:id')
   })
 
   CommentsRouter.route('/')
-    .get(requireAuth, (req, res, next) => {
+    .get( requireAuth, (req, res, next) => {
       CommentsService.getAllComments(req.app.get('db'), req.user.id)
         .then((comment) => {
           res.json(comment.map(serializeComment))
@@ -31,8 +31,7 @@ CommentsRouter.route('/:id')
 
 
     .post(bodyParser, requireAuth, (req, res, next) => {
-      const { comment, story } = req.body
-      const author = req.user.id
+      const { author, comment, story } = req.body
       const newComment = { author, story, comment }
       console.log(req.body)
       for (const field of ["comment", "story"]) {
