@@ -16,6 +16,12 @@ const UsersService = {
       .first()
       .then((email) => !!email);
   },
+  getUserById(db, id) {
+    return db('itav_users')
+      .where({ id })
+      .first()
+      .then((user) => !!user);
+  },
   getAllUsers(db) {
     return db.from('itav_users').select('*');
   },
