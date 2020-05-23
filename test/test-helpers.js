@@ -177,53 +177,71 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   return `Bearer ${ token } `;
 }
 
-module.exports = {
-  makeUsersArray,
-  makeStoryFixtures,
-  cleanTables,
-  seedUsers,
-  makeAuthHeader,
-      RESTART IDENTITY CASCADE`
-  );
-}
+// };
 
 // function seedUsers(db, users) {
-//   //   const preppedUsers = users.map((user) => ({
-//   //     ...user,
-//   //     password: bcrypt.hashSync(user.password, 1),
-//   //   }));
-
-//   return db
-//     .insert(users)
-//     .into('itav_users')
-//     .returning('*')
-//     .then(([user]) => user);
+//   const hashedUsers = users.map((user) => ({
+//     ...user,
+//     password: bcrypt.hashSync(user.password, 1),
+//   }));
+//   return db.into("itav_users").insert(hashedUsers);
 // }
 
-// function seedThingsTables(db, users, things, reviews = []) {
-//   return db
-//     .into('thingful_users')
-//     .insert(users)
-//     .then(() =>
-//       db
-//         .into('thingful_things')
-//         .insert(things)
-//     )
-//     .then(() =>
-//       reviews.length && db.into('thingful_reviews').insert(reviews)
-//     )
+// function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+//   const token = jwt.sign({ user_id: user.id }, secret, {
+//     subject: user.name,
+//     algorithm: "HS256",
+//   });
+//   return `Bearer ${ token } `;
 // }
 
-// function seedMaliciousThing(db, user, thing) {
-//   return seedUsers(db, [user]).then(() =>
-//     db.into('thingful_things').insert([thing])
+// module.exports = {
+//   makeUsersArray,
+//   makeStoryFixtures,
+//   cleanTables,
+//   seedUsers,
+//   makeAuthHeader,
+//       RESTART IDENTITY CASCADE`
 //   );
 // }
 
-module.exports = {
-  makeUsersArray,
-  makeFixtures,
-  cleanTables,
-  //   seedUsers,
-};
+// // function seedUsers(db, users) {
+// //   //   const preppedUsers = users.map((user) => ({
+// //   //     ...user,
+// //   //     password: bcrypt.hashSync(user.password, 1),
+// //   //   }));
+
+// //   return db
+// //     .insert(users)
+// //     .into('itav_users')
+// //     .returning('*')
+// //     .then(([user]) => user);
+// // }
+
+// // function seedThingsTables(db, users, things, reviews = []) {
+// //   return db
+// //     .into('thingful_users')
+// //     .insert(users)
+// //     .then(() =>
+// //       db
+// //         .into('thingful_things')
+// //         .insert(things)
+// //     )
+// //     .then(() =>
+// //       reviews.length && db.into('thingful_reviews').insert(reviews)
+// //     )
+// // }
+
+// // function seedMaliciousThing(db, user, thing) {
+// //   return seedUsers(db, [user]).then(() =>
+// //     db.into('thingful_things').insert([thing])
+// //   );
+// // }
+
+// module.exports = {
+//   makeUsersArray,
+//   makeFixtures,
+//   cleanTables,
+//   //   seedUsers,
+// };
 
