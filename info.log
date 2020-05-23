@@ -15,12 +15,6 @@
 {"message":"flag is required","level":"error"}
 {"message":"story with id 5 has been created!","level":"info"}
 {"message":"story with id 6 has been created!","level":"info"}
-{"message":"story with id 7 has been created!","level":"info"}
-{"message":"story with id 3 not found!","level":"error"}
-{"message":"story with id 3 not found!","level":"error"}
-{"message":"story with id 8 has been created!","level":"info"}
-{"message":"story with id 3 not found!","level":"error"}
-{"message":"story with id 9 has been created!","level":"info"}
 {"message":"story with id 10 has been created!","level":"info"}
 {"message":"story with id 11 has been created!","level":"info"}
 {"message":"story with id 12 has been created!","level":"info"}
@@ -55,3 +49,4 @@
 {"message":"story with id 31 has been created!","level":"info"}
 {"message":"story with id 32 has been created!","level":"info"}
 {"message":"story with id 33 has been created!","level":"info"}
+{"message":"story with id 23 has been created!","level":"info"}
