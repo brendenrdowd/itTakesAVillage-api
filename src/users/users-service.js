@@ -32,6 +32,13 @@ const UsersService = {
       .returning('*')
       .then(([user]) => user);
   },
+
+  deleteUser(db, id) {
+    return db('itav_users')
+      .where({ id })
+      .del()
+  },
+
   validatePassword(password) {
     if (password.length < 8) {
       return 'Password be longer than 8 characters';

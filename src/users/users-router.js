@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const UsersService = require('./users-service');
+const { requireAuth } = require('../middleware/jwt-auth')
 
 const usersRouter = express.Router();
 const jsonBodyParser = express.json();
@@ -12,7 +13,7 @@ usersRouter.route('/').get((req, res, next) => {
     })
     .catch(next);
 });
-usersRouter.get('/:id', (req,res,next) => {
+usersRouter.get('/:id', (req, res, next) => {
   UsersService.getUserById(
     req.app.get('db'),
     req.params.id)
@@ -21,6 +22,17 @@ usersRouter.get('/:id', (req,res,next) => {
     })
     .catch(next);
 })
+
+usersRouter.delete('/', requireAuth, (req, res, next) => {
+  UsersService.deleteUser(
+    req.app.get('db'),
+    req.user.id)
+    .then((user) => {
+      res.json({ message: "User was deleted" });
+    })
+    .catch(next);
+})
+
 usersRouter.post('/', jsonBodyParser, (req, res, next) => {
   const { name, email, username, location, password } = req.body;
 
