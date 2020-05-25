@@ -100,7 +100,7 @@ describe("stroy endpoints", function () {
               expect(res.body.author).to.eql(newStory.author);
               expect(res.body.issue).to.eql(newStory.issue);
               expect(res.body).to.not.have.property("password");
-              expect(res.headers.location).to.eql(`/api/users/${res.body.id}`);
+              expect(res.headers.location).to.eql(`/api/story/${res.body.id}`);
             })
             .expect((res) =>
               db
