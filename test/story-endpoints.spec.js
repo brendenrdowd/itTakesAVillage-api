@@ -1,7 +1,7 @@
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe("stroy endpoints", function () {
+describe("story endpoints", function () {
   let db;
 
   const { testStories } = helpers.makeStoryFixtures();

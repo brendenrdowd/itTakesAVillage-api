@@ -19,16 +19,13 @@ const serializeStory = (story) => ({
 });
 
 StoryRouter.route("/")
-  // .get((req, res, next) => {
   .get(requireAuth, (req, res, next) => {
     StoryService.getAllStories(req.app.get("db"), req.user.id)
-      // StoryService.getAllStories(req.app.get("db"))
       .then((story) => {
         res.json(story.map(serializeStory));
       })
       .catch(next);
   })
-  // .post(bodyParser, (req, res, next) => {
   .post(bodyParser, requireAuth, (req, res, next) => {
     const { issue, flag } = req.body;
     const author = req.user.id;
@@ -77,28 +74,25 @@ StoryRouter.route("/:id")
   .delete((req, res, next) => {
     const { id } = req.params;
     StoryService.deleteStory(req.app.get("db"), id)
-      .then((numRowsAffected) => {
-        logger.info(` story with id ${id} has been deleted!`);
+      .then((story) => {
+        logger.info(` story with id ${story.id} has been deleted!`);
         res.status(204).end();
       })
       .catch(next);
   })
   .patch(bodyParser, (req, res, next) => {
-    const { issue, id } = req.body;
-    const storyToUpdate = { id };
-
-    const numberOfValues = Object.numberOfValues(storyToUpdate).filter(Boolean)
-      .length;
-    if (numberOfValues === 0) {
+    const { resolved } = req.body;
+    const storyToUpdate = { resolved };
+    if (resolved === !resolved) {
       return res.status(400).json({
         error: {
-          message: `Request body must contain a issue`,
+          message: `Request body must contain resolved`,
         },
       });
     }
-
-    StoryService.updateStory(req.app.get("db"), id, issue)
-      .then((numRowsAffected) => {
+    StoryService.updateStory(req.app.get("db"), req.params.id, storyToUpdate)
+      .then(() => {
+        logger.info(`story has been resolved!`);
         res.status(204).end();
       })
       .catch(next);
