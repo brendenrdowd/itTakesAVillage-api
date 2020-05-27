@@ -112,7 +112,7 @@ function makeStoryFixtures() {
   const testStories = makeStoriesArray(testUsers);
   const testComments = makeCommentsArray(testUsers, testStories);
 
-  return { testUsers, testRecipes };
+  return { testUsers, testStories, testComments };
 }
 
 function cleanTables(db) {
