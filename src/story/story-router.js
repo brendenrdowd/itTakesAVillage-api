@@ -93,7 +93,14 @@ StoryRouter.route("/:id")
     StoryService.updateStory(req.app.get("db"), req.params.id, storyToUpdate)
       .then(() => {
         logger.info(`story has been resolved!`);
-        res.status(204).end();
+        res
+          .status(200)
+          .json({
+            message: {
+              message: `resolved has been updated`,
+            },
+          })
+          .end();
       })
       .catch(next);
   });
