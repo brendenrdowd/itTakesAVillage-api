@@ -43,43 +43,66 @@ function makeStoriesArray(users) {
   return [
     {
       id: 1,
-      issue:
-        "Looking for a person, who can go to WholeFoods and buy a groceries from a list for me and arrange a non-contact delivery to my house",
-      created_at: "2020-05-22T11:03:23.317Z",
-      author: 1,
-      flag: "food",
+      issue: "story test 1",
+      flag: "clothes",
       resolved: false,
+      created_at: new Date(),
     },
     {
-      id: 2,
-      issue: "Need a ride to the hospital for an appointment on 5/30",
-      created_at: "2020-05-22T11:03:23.317Z",
-      author: 1,
-      flag: "transportation",
+      id: 1,
+      issue: "story test 1",
+      flag: "clothes",
       resolved: false,
+      created_at: new Date(),
     },
     {
-      id: 3,
-      issue: "looking for a winter jacket for my son, he is 10",
-      created_at: "2020-05-22T11:03:23.317Z",
-      author: 1,
-      flag: "clothing",
+      id: 1,
+      issue: "story test 1",
+      flag: "clothes",
       resolved: false,
+      created_at: new Date(),
     },
     {
-      id: 4,
-      issue: "test",
-      created_at: "2020-05-22T11:45:17.295Z",
-      author: 3,
-      flag: "food",
+      id: 1,
+      issue: "story test 1",
+      flag: "clothes",
       resolved: false,
+      created_at: new Date(),
     },
   ];
 }
-
 // needs to be updated
-function makeCommentsArray(users) {
-  return [{}, {}, {}, {}];
+function makeCommentsArray(users, stories) {
+  return [
+    {
+      id: 1,
+      author: 1,
+      story: 1,
+      comment: "test comment 1",
+      created_at: new Date(),
+    },
+    {
+      id: 2,
+      author: 1,
+      story: 1,
+      comment: "test comment 2",
+      created_at: new Date(),
+    },
+    {
+      id: 3,
+      author: 1,
+      story: 1,
+      comment: "test comment 3",
+      created_at: new Date(),
+    },
+    {
+      id: 4,
+      author: 1,
+      story: 1,
+      comment: "test comment 4",
+      created_at: new Date(),
+    },
+  ];
 }
 
 function makeStoryFixtures() {
@@ -87,11 +110,7 @@ function makeStoryFixtures() {
   const testStories = makeStoriesArray(testUsers);
   const testComments = makeCommentsArray(testUsers, testStories);
 
-  return { testUsers, testStories };
-}
-
-function makeFixtures() {
-  return [{}, {}, {}, {}];
+  return { testUsers, testStories, testComments };
 }
 
 function cleanTables(db) {
@@ -100,7 +119,7 @@ function cleanTables(db) {
       itav_users,
       itav_comments,
       itav_stories
-      RESTART IDENTITY CASCADE`
+      RESTART IDENTITY CASCADE;`
   );
 }
 
@@ -120,12 +139,15 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   return `Bearer ${token} `;
 }
 
-function seedStories(db, stories) {
-  const testStories = stories.map((story) => ({
-    ...story,
-  }));
-  return db.into("itav_stories").insert(testStories);
-}
+module.exports = {
+  makeUsersArray,
+  makeCommentsArray,
+  makeStoriesArray,
+  makeStoryFixtures,
+  cleanTables,
+  seedUsers,
+  makeAuthHeader,
+};
 
 module.exports = {
   makeUsersArray,

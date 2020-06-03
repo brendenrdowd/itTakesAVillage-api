@@ -6,6 +6,7 @@
 // describe('Auth Endpoints', function () {
 //   let db
 
+<<<<<<< HEAD
 //   const { testUsers } = helpers.makeUsersArray()
 
 //   before('make knex instance', () => {
@@ -15,6 +16,10 @@
 //     })
 //     app.set('db', db)
 //   })
+=======
+  const { testUsers } = helpers.makeStoryFixtures()
+  const testUser = testUsers[0]
+>>>>>>> master
 
 //   after('disconnect from db', () => db.destroy())
 
@@ -27,6 +32,7 @@
 //       return db.into('itav_users').insert(testUsers);
 //     });
 
+<<<<<<< HEAD
 //     const requiredFields = ['username', 'password']
 
 //     requiredFields.forEach(field => {
@@ -37,6 +43,17 @@
 
 //       it(`responds with 400 required error when '${field}' is missing`, () => {
 //         delete loginAttemptBody[field]
+=======
+  describe(`POST /api/auth/login`, () => {
+    beforeEach('insert users', () =>
+      helpers.seedUsers(
+        db,
+        testUsers,
+      )
+    )
+
+    const requiredFields = ['email', 'password']
+>>>>>>> master
 
 //         return supertest(app)
 //           .post('/api/auth/login')
@@ -47,6 +64,7 @@
 //       })
 //       // })
 
+<<<<<<< HEAD
 //       // it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
 //       //   const userValidCreds = {
 //       //     email: testUser.email,
@@ -69,3 +87,39 @@
 //     })
 //   })
 // })
+=======
+      it(`responds with 400 required error when '${field}' is missing`, () => {
+        delete loginAttemptBody[field]
+
+        return supertest(app)
+          .post('/api/auth/login')
+          .send(loginAttemptBody)
+          .expect(400, {
+            error: `Missing '${field}' in request body`,
+          })
+      })
+    })
+
+    it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
+      const userValidCreds = {
+        email: testUser.email,
+        password: testUser.password,
+      }
+      const expectedToken = jwt.sign(
+        { user_id: testUser.id },
+        process.env.JWT_SECRET,
+        {
+          subject: testUser.email,
+          algorithm: 'HS256',
+        }
+      )
+      return supertest(app)
+        .post('/api/auth/login')
+        .send(userValidCreds)
+        .expect(200, {
+          authToken: expectedToken
+        })
+    })
+  })
+})
+>>>>>>> master
