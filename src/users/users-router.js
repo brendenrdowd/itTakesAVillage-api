@@ -18,7 +18,7 @@ usersRouter.get('/:id', (req, res, next) => {
     req.app.get('db'),
     req.params.id)
     .then((user) => {
-      res.json(user.map(UsersService.serializeUser));
+      res.json(serializeStory(user));
     })
     .catch(next);
 })
