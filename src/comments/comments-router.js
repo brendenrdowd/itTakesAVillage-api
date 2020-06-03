@@ -1,6 +1,5 @@
 const express = require('express')
 const CommentsService = require('./comments-service')
-const UsersService = require('../users/users-service')
 const CommentsRouter = express.Router();
 const bodyParser = express.json()
 const { requireAuth } = require('../middleware/jwt-auth')
@@ -9,8 +8,7 @@ const { requireAuth } = require('../middleware/jwt-auth')
 const serializeComment = (comment, user = {}) => ({
   id: comment.id,
   comment: comment.comment,
-  author: comment.author,
-  authorName:user.username
+  author: comment.author
 })
 CommentsRouter.route('/:id')
   //remember to put back requireAuth
