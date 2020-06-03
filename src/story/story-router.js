@@ -81,8 +81,8 @@ StoryRouter.route("/:id")
       .catch(next);
   })
   .patch(bodyParser, (req, res, next) => {
-    const { resolved } = req.body;
-    const storyToUpdate = { resolved };
+    const { resolved, issue } = req.body;
+    const storyToUpdate = { resolved, issue };
     if (resolved === !resolved) {
       return res.status(400).json({
         error: {
