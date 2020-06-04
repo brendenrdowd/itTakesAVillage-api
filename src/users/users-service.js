@@ -19,8 +19,7 @@ const UsersService = {
   getUserById(db, id) {
     return db('itav_users')
       .where({ id })
-      .first()
-      .then((user) => !!user);
+      .first();
   },
   getAllUsers(db) {
     return db.from('itav_users').select('*');
