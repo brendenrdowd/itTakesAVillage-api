@@ -12,6 +12,16 @@ usersRouter.route('/').get((req, res, next) => {
     })
     .catch(next);
 });
+usersRouter.route('/check').post(jsonBodyParser, (req, res, next) => {
+  const { username } = req.body;
+
+  UsersService.hasUserWithUserName(req.app.get('db'), username).then(
+    (hasUserWithUserName) => {
+      res.json(hasUserWithUserName);
+    }
+  );
+});
+
 usersRouter.post('/', jsonBodyParser, (req, res, next) => {
   const { name, email, username, location, password } = req.body;
 

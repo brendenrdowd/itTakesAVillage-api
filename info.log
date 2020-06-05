@@ -23,3 +23,7 @@
 {"message":"story with id 9 has been created!","level":"info"}
 {"message":"story with id 10 has been created!","level":"info"}
 {"message":"story with id 11 has been created!","level":"info"}
+{"message":"story with id 1 not found!","level":"error"}
+{"message":"story with id 1 not found!","level":"error"}
+{"message":"story with id 1 not found!","level":"error"}
+{"message":"story with id 1 not found!","level":"error"}

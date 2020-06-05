@@ -44,5 +44,3 @@ ALTER TABLE itav_comments
 
     story INTEGER REFERENCES itav_stories(id)
     ON DELETE SET NULL;
-
-
