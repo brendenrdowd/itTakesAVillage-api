@@ -4,8 +4,8 @@ const CommentsRouter = express.Router();
 const bodyParser = express.json()
 const { requireAuth } = require('../middleware/jwt-auth')
 
-// grab author username
-const serializeComment = (comment) => ({
+// grab author username -- need to verify in client
+const serializeComment = (comment, user = {}) => ({
   id: comment.id,
   comment: comment.comment,
   author: comment.author,
