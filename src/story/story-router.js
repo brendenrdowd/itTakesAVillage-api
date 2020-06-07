@@ -3,6 +3,7 @@ const StoryService = require("./story-service");
 const logger = require("../logger");
 const StoryRouter = express.Router();
 const bodyParser = express.json();
+const { requireAuth } = require("../middleware/jwt-auth");
 
 const serializeStory = (story) => ({
   id: story.id,
@@ -12,25 +13,25 @@ const serializeStory = (story) => ({
   // in place of folder_id
   author: story.author,
   // in place of content
-  keyword: story.keyword,
+  flag: story.flag,
   // need to add
   resolved: story.resolved,
 });
 
 StoryRouter.route("/")
-  .get((req, res, next) => {
-    StoryService.getAllStories(req.app.get("db"))
+  .get(requireAuth, (req, res, next) => {
+    StoryService.getAllStories(req.app.get("db"), req.user.id)
       .then((story) => {
         res.json(story.map(serializeStory));
       })
       .catch(next);
   })
-  .post(bodyParser, (req, res, next) => {
-    const { issue, flag, author } = req.body;
+  .post(bodyParser, requireAuth, (req, res, next) => {
+    const { issue, flag } = req.body;
+    const author = req.user.id;
     const newStory = { issue, flag, author };
-    // old change
-    // for (const field of ["issue", "keyword", "author"]) {
-    for (const field of ["issue", "flag", "author"]) {
+
+    for (const field of ["issue", "flag"]) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
         return res.status(400).send({
@@ -38,8 +39,6 @@ StoryRouter.route("/")
         });
       }
     }
-    // const { issue, keyword, author } = req.body;
-    // const newStory = { issue, keyword, author };
 
     StoryService.insertStory(req.app.get("db"), newStory)
       .then((story) => {
@@ -75,29 +74,33 @@ StoryRouter.route("/:id")
   .delete((req, res, next) => {
     const { id } = req.params;
     StoryService.deleteStory(req.app.get("db"), id)
-      .then((numRowsAffected) => {
-        logger.info(` story with id ${id} has been deleted!`);
+      .then((story) => {
+        logger.info(` story with id ${story.id} has been deleted!`);
         res.status(204).end();
       })
       .catch(next);
   })
   .patch(bodyParser, (req, res, next) => {
-    const { issue, id } = req.body;
-    const storyToUpdate = { id };
-
-    const numberOfValues = Object.numberOfValues(storyToUpdate).filter(Boolean)
-      .length;
-    if (numberOfValues === 0) {
+    const { resolved, issue } = req.body;
+    const storyToUpdate = { resolved, issue };
+    if (resolved === !resolved) {
       return res.status(400).json({
         error: {
-          message: `Request body must contain a issue`,
+          message: `Request body must contain resolved`,
         },
       });
     }
-
-    StoryService.updateStory(req.app.get("db"), id, issue)
-      .then((numRowsAffected) => {
-        res.status(204).end();
+    StoryService.updateStory(req.app.get("db"), req.params.id, storyToUpdate)
+      .then(() => {
+        logger.info(`story has been resolved!`);
+        res
+          .status(200)
+          .json({
+            message: {
+              message: `resolved has been updated`,
+            },
+          })
+          .end();
       })
       .catch(next);
   });

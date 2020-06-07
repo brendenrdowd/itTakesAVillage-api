@@ -17,6 +17,12 @@ const UsersService = {
       .first()
       .then((email) => !!email);
   },
+  getUserById(db, id) {
+    return db('itav_users')
+      .where({ id })
+      .first()
+      .then((user) => !!user);
+  },
   getAllUsers(db) {
     return db.from('itav_users').select('*');
   },
@@ -27,11 +33,13 @@ const UsersService = {
       .returning('*')
       .then(([user]) => user);
   },
-  validateEmail(email) {
-    if (!validator.isEmail(email)) {
-      return 'Invalid email address';
-    }
+
+  deleteUser(db, id) {
+    return db('itav_users')
+      .where({ id })
+      .del()
   },
+
   validatePassword(password) {
     if (password.length < 8) {
       return 'Password be longer than 8 characters';
