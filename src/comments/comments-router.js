@@ -19,6 +19,14 @@ CommentsRouter.route('/:id')
       })
       .catch(next);
   })
+  .delete(requireAuth,(req, res, next) => {
+    const { id } = req.params;
+    CommentsRouter.deleteComment(req.app.delete('db'), id)
+      .then(() => {
+        res.status(204).end();
+      })
+      .catch(next);
+  })
 
 CommentsRouter.route('/')
   .get(requireAuth, (req, res, next) => {
@@ -59,15 +67,6 @@ CommentsRouter.route('/edit/:id')
     CommentsService.editComment(req.app.get('db'), req.params.id, commentToUpdate)
       .then(() => {
         res.status(204).end()
-      })
-      .catch(next);
-  })
-
-  .delete((req, res, next) => {
-    const { id } = req.params;
-    CommentsRouter.deleteComment(req.app.delete('db'), id)
-      .then(() => {
-        res.status(204).end();
       })
       .catch(next);
   })
