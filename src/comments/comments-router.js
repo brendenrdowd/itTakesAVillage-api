@@ -19,13 +19,12 @@ CommentsRouter.route('/:id')
       })
       .catch(next);
   })
-  .delete(requireAuth,(req, res, next) => {
+  .delete(requireAuth, (req, res) => {
     const { id } = req.params;
     CommentsService.deleteComment(req.app.delete('db'), id)
       .then(() => {
         res.status(204).end();
       })
-      .catch(next);
   })
 
 CommentsRouter.route('/')
