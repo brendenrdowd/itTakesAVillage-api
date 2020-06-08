@@ -2,6 +2,7 @@ const express = require('express')
 const CommentsService = require('./comments-service')
 const CommentsRouter = express.Router();
 const bodyParser = express.json()
+const logger = require("../logger");
 const { requireAuth } = require('../middleware/jwt-auth')
 
 // grab author username -- need to verify in client
@@ -11,7 +12,6 @@ const serializeComment = (comment) => ({
   author: comment.author
 })
 CommentsRouter.route('/:id')
-  //remember to put back requireAuth
   .get(requireAuth, (req, res, next) => {
     CommentsService.getCommentByStoryId(req.app.get('db'), req.params.id)
       .then((comment) => {
@@ -19,12 +19,15 @@ CommentsRouter.route('/:id')
       })
       .catch(next);
   })
-  .delete(requireAuth, (req, res) => {
+  //remember to put back requireAuth
+  .delete(requireAuth,(req, res,next) => {
     const { id } = req.params;
-    CommentsService.deleteComment(req.app.delete('db'), id)
+    CommentsService.deleteComment(req.app.get('db'), id)
       .then(() => {
-        res.status(204).end();
+        // problem with this return??
+        res.status(204).send("deleted");
       })
+      .catch(next);
   })
 
 CommentsRouter.route('/')
@@ -52,7 +55,6 @@ CommentsRouter.route('/')
       .then((comment) => {
         res
           .status(201)
-          .location(`/comment/${comment.id}`)
           .json(serializeComment(comment))
       })
       .catch(next)
