@@ -21,7 +21,7 @@ CommentsRouter.route('/:id')
   })
   .delete(requireAuth,(req, res, next) => {
     const { id } = req.params;
-    CommentsRouter.deleteComment(req.app.delete('db'), id)
+    CommentsService.deleteComment(req.app.delete('db'), id)
       .then(() => {
         res.status(204).end();
       })
