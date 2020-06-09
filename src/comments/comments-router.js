@@ -12,7 +12,7 @@ const serializeComment = (comment) => ({
   author: comment.author
 })
 CommentsRouter.route('/:id')
-  .get(requireAuth, (req, res, next) => {
+  .get((req, res, next) => {
     CommentsService.getCommentByStoryId(req.app.get('db'), req.params.id)
       .then((comment) => {
         res.json(comment.map(serializeComment))
