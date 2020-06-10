@@ -101,3 +101,5 @@
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
+{"message":"story with id 22 has been created!","level":"info"}
+{"message":"story with id 23 has been created!","level":"info"}
