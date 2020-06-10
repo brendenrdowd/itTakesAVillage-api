@@ -18,7 +18,9 @@ const CommentsService = {
     });
   },
   deleteComment(knex, id) {
-    return knex('itav_comments').where({id}).delete();
+    return knex('itav_comments').where({id}).del().then(function (count) {
+      console.log(count);
+    });
   },
   editComment(knex, id, newComment) { 
     return knex('itav_comments').where({id}).update(newComment);

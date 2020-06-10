@@ -147,14 +147,6 @@ module.exports = {
   cleanTables,
   seedUsers,
   makeAuthHeader,
-};
-
-module.exports = {
-  makeUsersArray,
   makeFixtures,
-  cleanTables,
-  seedUsers,
-  makeStoryFixtures,
-  makeStoriesArray,
   seedStories,
 };

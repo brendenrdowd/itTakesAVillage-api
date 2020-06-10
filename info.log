@@ -85,6 +85,7 @@
 {"message":"story has been resolved!","level":"info"}
 {"message":"story has been resolved!","level":"info"}
 {"message":"story has been resolved!","level":"info"}
+<<<<<<< HEAD
 {"message":"story has been resolved!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
@@ -103,3 +104,6 @@
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":"story with id 22 has been created!","level":"info"}
 {"message":"story with id 23 has been created!","level":"info"}
+=======
+{"message":" story with id undefined has been deleted!","level":"info"}
+>>>>>>> master

@@ -19,8 +19,7 @@ const UsersService = {
   getUserById(db, id) {
     return db('itav_users')
       .where({ id })
-      .first()
-      .then((user) => !!user);
+      .first();
   },
   getAllUsers(db) {
     return db.from('itav_users').select('*');
@@ -29,6 +28,16 @@ const UsersService = {
     return db
       .insert(newUser)
       .into('itav_users')
+      .returning('*')
+      .then(([user]) => user);
+  },
+  updateUser(db, id, updatedUser) {
+    return db('itav_users')
+      .where({ id })
+      .update({
+        username: updatedUser.username,
+        location: updatedUser.location
+      })
       .returning('*')
       .then(([user]) => user);
   },
