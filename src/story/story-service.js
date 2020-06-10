@@ -12,6 +12,7 @@ const StoryService = {
       .returning("*")
       .then(([story]) => story);
   },
+
   deleteStory(db, id) {
     return db("itav_stories").where({ id }).delete();
   },
