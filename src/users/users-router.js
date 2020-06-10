@@ -22,6 +22,29 @@ usersRouter.get('/:id', (req, res, next) => {
     })
     .catch(next);
 })
+usersRouter.patch('/:id',jsonBodyParser, (req, res, next) => {
+  console.log(req.body)
+  const { username, location } = req.body;
+
+  for (const field of ['username', 'location'])
+    if (!req.body[field])
+      return res.status(400).json({
+        error: `Missing '${field}' in request body`,
+      });
+
+  const updatedUser = {
+    username, location
+  }
+
+  return UsersService.updateUser(req.app.get('db'), req.params.id, updatedUser).then(
+    (user) => {
+      res
+        .status(200)
+        // .location(path.posix.join(req.originalUrl, `/${user.id}`))
+        .json(UsersService.serializeUser(user));
+    }
+  );
+})
 
 usersRouter.delete('/', requireAuth, (req, res, next) => {
   UsersService.deleteUser(

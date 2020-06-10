@@ -31,6 +31,16 @@ const UsersService = {
       .returning('*')
       .then(([user]) => user);
   },
+  updateUser(db, id, updatedUser) {
+    return db('itav_users')
+      .where({ id })
+      .update({
+        username: updatedUser.username,
+        location: updatedUser.location
+      })
+      .returning('*')
+      .then(([user]) => user);
+  },
 
   deleteUser(db, id) {
     return db('itav_users')
