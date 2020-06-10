@@ -40,7 +40,6 @@ usersRouter.patch('/:id',jsonBodyParser, (req, res, next) => {
     (user) => {
       res
         .status(200)
-        // .location(path.posix.join(req.originalUrl, `/${user.id}`))
         .json(UsersService.serializeUser(user));
     }
   );

@@ -7,14 +7,10 @@ const { requireAuth } = require("../middleware/jwt-auth");
 
 const serializeStory = (story) => ({
   id: story.id,
-  // in place of name
   issue: story.issue,
   created_at: story.created_at,
-  // in place of folder_id
   author: story.author,
-  // in place of content
   flag: story.flag,
-  // need to add
   resolved: story.resolved,
 });
 
