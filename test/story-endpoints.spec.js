@@ -1,7 +1,8 @@
+const knex = require("knex");
 const app = require("../src/app");
 const helpers = require("./test-helpers");
 
-describe("story endpoints", function () {
+describe.only("story endpoints", function () {
   let db;
 
   const { testStories } = helpers.makeStoryFixtures();
@@ -10,7 +11,7 @@ describe("story endpoints", function () {
   before("make knex instance", () => {
     db = knex({
       client: "pg",
-      connection: process.env.TEST_DB_URL,
+      connection: process.env.DATABASE_URL,
     });
     app.set("db", db);
   });
@@ -23,7 +24,9 @@ describe("story endpoints", function () {
 
   describe(`POST /api/story`, () => {
     context(`Story Validation`, () => {
-      beforeEach("insert stories", () => helpers.seedStories(db, testStories));
+      beforeEach("insert stories", () =>
+        helpers.makeStoryFixtures(db, testStory)
+      );
 
       const requiredFields = ["author", "issue", "flag"];
 

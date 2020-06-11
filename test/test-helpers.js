@@ -42,28 +42,28 @@ function makeUsersArray() {
 function makeStoriesArray(users) {
   return [
     {
-      id: 1,
+      id: 100,
       issue: "story test 1",
       flag: "clothes",
       resolved: false,
       created_at: new Date(),
     },
     {
-      id: 1,
+      id: 101,
       issue: "story test 1",
       flag: "clothes",
       resolved: false,
       created_at: new Date(),
     },
     {
-      id: 1,
+      id: 102,
       issue: "story test 1",
       flag: "clothes",
       resolved: false,
       created_at: new Date(),
     },
     {
-      id: 1,
+      id: 103,
       issue: "story test 1",
       flag: "clothes",
       resolved: false,
@@ -147,6 +147,7 @@ module.exports = {
   cleanTables,
   seedUsers,
   makeAuthHeader,
-  makeFixtures,
   seedStories,
+  // makeFixtures,
+  // seedStories,
 };
