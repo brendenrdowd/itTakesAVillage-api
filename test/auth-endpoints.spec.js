@@ -26,7 +26,7 @@ describe("Auth Endpoints", function () {
   describe(`POST /api/auth/login`, () => {
     beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
 
-    const requiredFields = ["email", "password"];
+    const requiredFields = ["username", "password"];
 
     requiredFields.forEach((field) => {
       const loginAttemptBody = {
@@ -48,14 +48,15 @@ describe("Auth Endpoints", function () {
 
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
       const userValidCreds = {
-        email: testUser.email,
+        username: testUser.username,
         password: testUser.password,
       };
       const expectedToken = jwt.sign(
         { user_id: testUser.id },
         process.env.JWT_SECRET,
         {
-          subject: testUser.email,
+          subject: testUser.username,
+          expiresIn: process.env.JWT_EXPIRY,
           algorithm: "HS256",
         }
       );

@@ -109,3 +109,11 @@
 >>>>>>> master
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":"story with id 20 not found!","level":"error"}
+{"message":"issue is required","level":"error"}
+{"message":"flag is required","level":"error"}
+{"message":"issue is required","level":"error"}
+{"message":"flag is required","level":"error"}
+{"message":"issue is required","level":"error"}
+{"message":"flag is required","level":"error"}
+{"message":"issue is required","level":"error"}
+{"message":"flag is required","level":"error"}

@@ -136,8 +136,10 @@ function seedUsers(db, users) {
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
+  console.log(user.name);
+
   const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.name,
+    subject: user.username,
     algorithm: "HS256",
   });
   return `Bearer ${token} `;
