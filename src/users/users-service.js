@@ -3,6 +3,8 @@ const xss = require('xss');
 
 const REGEX_UPPER_LOWER_NUMBER_SPECIAL = /(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])/;
 
+//Verifies user has a username and email. Gets all users and by user id
+//Updates user and deletes user
 const UsersService = {
   hasUserWithUserName(db, username) {
     return db('itav_users')
@@ -47,7 +49,8 @@ const UsersService = {
       .where({ id })
       .del()
   },
-
+  //Verifies that password entered is between 8 and 72 characters
+  //Checks if password contains atleast one upper case and one number
   validatePassword(password) {
     if (password.length < 8) {
       return 'Password be longer than 8 characters';
@@ -63,6 +66,7 @@ const UsersService = {
     }
     return null;
   },
+  //Hashes password for extra security
   hashPassword(password) {
     return bcrypt.hash(password, 12);
   },

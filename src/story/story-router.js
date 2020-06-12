@@ -5,6 +5,7 @@ const StoryRouter = express.Router();
 const bodyParser = express.json();
 const { requireAuth } = require("../middleware/jwt-auth");
 
+//Converts objects into bytes to store into database
 const serializeStory = (story) => ({
   id: story.id,
   issue: story.issue,
@@ -14,6 +15,7 @@ const serializeStory = (story) => ({
   resolved: story.resolved,
 });
 
+//Gets all stories
 StoryRouter.route("/")
   .get(requireAuth, (req, res, next) => {
     StoryService.getAllStories(req.app.get("db"), req.user.id)
@@ -35,7 +37,7 @@ StoryRouter.route("/")
         });
       }
     }
-
+    //Creates story and story id for specific story
     StoryService.insertStory(req.app.get("db"), newStory)
       .then((story) => {
         logger.info(`story with id ${story.id} has been created!`);
@@ -47,6 +49,7 @@ StoryRouter.route("/")
       .catch(next);
   });
 
+//Checks and gets story by id
 StoryRouter.route("/:id")
   .all((req, res, next) => {
     const { id } = req.params;
@@ -67,6 +70,7 @@ StoryRouter.route("/:id")
   .get((req, res) => {
     res.json(serializeStory(res.story));
   })
+  //Allows user to delete story
   .delete((req, res, next) => {
     const { id } = req.params;
     StoryService.deleteStory(req.app.get("db"), id)
@@ -86,6 +90,7 @@ StoryRouter.route("/:id")
         },
       });
     }
+    //Allow user to update story
     StoryService.updateStory(req.app.get("db"), req.params.id, storyToUpdate)
       .then(() => {
         logger.info(`story has been resolved!`);

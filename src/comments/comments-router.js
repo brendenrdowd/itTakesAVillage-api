@@ -11,6 +11,7 @@ const serializeComment = (comment) => ({
   comment: comment.comment,
   author: comment.author
 })
+//Maps through comments by id of the story
 CommentsRouter.route('/:id')
   .get((req, res, next) => {
     CommentsService.getCommentByStoryId(req.app.get('db'), req.params.id)
@@ -20,7 +21,8 @@ CommentsRouter.route('/:id')
       .catch(next);
   })
   //remember to put back requireAuth
-  .delete(requireAuth,(req, res,next) => {
+  //Deletes comments and once request is fulfilled, sends back 204 message saying deleted
+  .delete(requireAuth, (req, res, next) => {
     const { id } = req.params;
     CommentsService.deleteComment(req.app.get('db'), id)
       .then(() => {
@@ -29,7 +31,7 @@ CommentsRouter.route('/:id')
       })
       .catch(next);
   })
-
+//Looks for all comments
 CommentsRouter.route('/')
   .get(requireAuth, (req, res, next) => {
     CommentsService.getAllComments(req.app.get('db'), req.user.id)
@@ -39,7 +41,7 @@ CommentsRouter.route('/')
       .catch(next);
   })
 
-
+  //Checks require fields are present when posting a comment
   .post(bodyParser, requireAuth, (req, res, next) => {
     const { author, comment, story } = req.body
     const newComment = { author, story, comment }
@@ -59,6 +61,7 @@ CommentsRouter.route('/')
       })
       .catch(next)
   })
+//Allows user to edit comments made and updates in database
 CommentsRouter.route('/edit/:id')
 
   .patch(bodyParser, (req, res, next) => {

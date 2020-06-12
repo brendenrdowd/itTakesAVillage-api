@@ -27,7 +27,7 @@ describe("Auth Endpoints", function () {
     beforeEach("insert users", () => helpers.seedUsers(db, testUsers));
 
     const requiredFields = ["email", "password"];
-
+    // Tests that username and password are entered when logging in
     requiredFields.forEach((field) => {
       const loginAttemptBody = {
         username: testUser.username,
@@ -45,7 +45,7 @@ describe("Auth Endpoints", function () {
           });
       });
     });
-
+    //Uses JWT auth token secret when login credentials are valid
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
       const userValidCreds = {
         email: testUser.email,
