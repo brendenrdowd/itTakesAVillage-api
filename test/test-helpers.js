@@ -42,33 +42,37 @@ function makeUsersArray() {
 function makeStoriesArray(users) {
   return [
     {
-      id: 100,
+      id: users[0].id,
+      author: 1,
       issue: "story test 1",
       flag: "clothes",
       resolved: false,
       created_at: new Date(),
     },
-    {
-      id: 101,
-      issue: "story test 1",
-      flag: "clothes",
-      resolved: false,
-      created_at: new Date(),
-    },
-    {
-      id: 102,
-      issue: "story test 1",
-      flag: "clothes",
-      resolved: false,
-      created_at: new Date(),
-    },
-    {
-      id: 103,
-      issue: "story test 1",
-      flag: "clothes",
-      resolved: false,
-      created_at: new Date(),
-    },
+    // {
+    //   id: 2,
+    //   author: 2,
+    //   issue: "story test 1",
+    //   flag: "clothes",
+    //   resolved: false,
+    //   created_at: new Date(),
+    // },
+    // {
+    //   id: 3,
+    //   author: 3,
+    //   issue: "story test 1",
+    //   flag: "clothes",
+    //   resolved: false,
+    //   created_at: new Date(),
+    // },
+    // {
+    //   id: 4,
+    //   author: 4,
+    //   issue: "story test 1",
+    //   flag: "clothes",
+    //   resolved: false,
+    //   created_at: new Date(),
+    // },
   ];
 }
 // needs to be updated
@@ -147,7 +151,6 @@ module.exports = {
   cleanTables,
   seedUsers,
   makeAuthHeader,
-  seedStories,
   // makeFixtures,
   // seedStories,
 };
