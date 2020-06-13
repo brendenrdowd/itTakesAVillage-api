@@ -39,7 +39,7 @@ describe("story endpoints", function () {
 
       requiredFields.forEach((field) => {
         const storyBody = {
-          author: 1,
+          author: 101,
           issue: "test issue",
           flag: "test flag",
         };
