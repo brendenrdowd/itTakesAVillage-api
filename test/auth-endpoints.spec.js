@@ -47,11 +47,12 @@ describe("Auth Endpoints", function () {
     });
 
     it(`responds 200 and JWT auth token using secret when valid credentials`, () => {
+      console.log("Let's see what we're dealing with");
       const userValidCreds = {
-        // issue if left in place
-        // username: testUser.username,
+        username: testUser.username,
         password: testUser.password,
       };
+      console.log(userValidCreds);
       const expectedToken = jwt.sign(
         { user_id: testUser.id },
         process.env.JWT_SECRET,
@@ -61,16 +62,13 @@ describe("Auth Endpoints", function () {
           algorithm: "HS256",
         }
       );
+      console.log(expectedToken);
       return supertest(app)
         .post("/api/auth/login")
         .send(userValidCreds)
         .expect(200, {
           authToken: expectedToken,
-        })
-        .end(function (err, res) {
-          if (err) throw err;
-          console.log("Response:");
-          console.log(res);
+          // might be able to pass the userId in here to handle the error
         });
     });
   });

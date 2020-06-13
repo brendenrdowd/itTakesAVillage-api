@@ -1,11 +1,11 @@
-const express = require('express');
-const AuthService = require('./auth-service');
-const { requireAuth } = require('../middleware/jwt-auth');
+const express = require("express");
+const AuthService = require("./auth-service");
+const { requireAuth } = require("../middleware/jwt-auth");
 
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
-authRouter.post('/login', jsonBodyParser, (req, res, next) => {
+authRouter.post("/login", jsonBodyParser, (req, res, next) => {
   const { username, password } = req.body;
   const loginUser = { username, password };
 
@@ -15,11 +15,11 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
         error: `Missing '${key}' in request body`,
       });
 
-  AuthService.getUserWithUserName(req.app.get('db'), loginUser.username)
+  AuthService.getUserWithUserName(req.app.get("db"), loginUser.username)
     .then((dbUser) => {
       if (!dbUser)
         return res.status(400).json({
-          error: 'Incorrect username or password ',
+          error: "Incorrect username or password ",
         });
 
       return AuthService.comparePasswords(
@@ -28,13 +28,14 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
       ).then((compareMatch) => {
         if (!compareMatch)
           return res.status(400).json({
-            error: 'Incorrect username or password',
+            error: "Incorrect username or password",
           });
         const sub = dbUser.username;
         const payload = { user_id: dbUser.id };
         const userId = dbUser.id;
         res.send({
           authToken: AuthService.createJwt(sub, payload),
+          // causes it to be called twice , error if left in place
           userId,
         });
       });
@@ -42,7 +43,7 @@ authRouter.post('/login', jsonBodyParser, (req, res, next) => {
     .catch(next);
 });
 
-authRouter.post('/refresh', requireAuth, (req, res) => {
+authRouter.post("/refresh", requireAuth, (req, res) => {
   const sub = req.user.username;
   const payload = { user_id: req.user.id };
   res.send({
