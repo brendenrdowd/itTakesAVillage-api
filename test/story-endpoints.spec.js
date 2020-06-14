@@ -26,7 +26,7 @@ describe("story endpoints", function () {
       beforeEach("insert stories", () => helpers.seedStories(db, testStories));
 
       const requiredFields = ["author", "issue", "flag"];
-
+      // Checks required fields are filled when posting a new story
       requiredFields.forEach((field) => {
         const storyBody = {
           author: 1,
@@ -45,7 +45,7 @@ describe("story endpoints", function () {
             });
         });
       });
-
+      // Tests that author is a number
       it(`responds 400 author must be a number`, () => {
         const authorNotNumber = {
           author: "one",
@@ -57,7 +57,7 @@ describe("story endpoints", function () {
           .send(authorNotNumber)
           .expect(400, { error: `author is not a number` });
       });
-
+      //Tests that issue stated is text (string)
       it(`responds 400 issue must be a string`, () => {
         const issueNotString = {
           author: 1,
@@ -81,7 +81,7 @@ describe("story endpoints", function () {
           .send(flagNotString)
           .expect(400, { error: `flag is not a string` });
       });
-
+      //Happy path test for new story
       context(`happy path test`, () => {
         it(`responds 201, serialized story`, () => {
           const newStory = {

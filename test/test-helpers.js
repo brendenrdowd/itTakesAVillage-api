@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// makeUsersArray
+//Test helpers for test users
 function makeUsersArray() {
   return [
     {
@@ -39,6 +39,7 @@ function makeUsersArray() {
   ];
 }
 // needs to be updated
+//Test helper for test stories
 function makeStoriesArray(users) {
   return [
     {
@@ -72,6 +73,7 @@ function makeStoriesArray(users) {
   ];
 }
 // needs to be updated
+//Test helpers for test comments
 function makeCommentsArray(users, stories) {
   return [
     {
@@ -112,7 +114,7 @@ function makeStoryFixtures() {
 
   return { testUsers, testStories, testComments };
 }
-
+//Truncates tables in database
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -122,13 +124,7 @@ function cleanTables(db) {
       RESTART IDENTITY CASCADE;`
   );
 }
-function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
-  const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.username,
-    algorithm: 'HS256',
-  });
-  return `Bearer ${token}`;
-}
+//Seeds hashed users and passwords
 function seedUsers(db, users) {
   const hashedUsers = users.map((user) => ({
     ...user,
@@ -157,14 +153,6 @@ module.exports = {
   cleanTables,
   seedUsers,
   makeAuthHeader,
-};
-
-module.exports = {
-  makeUsersArray,
   makeFixtures,
-  cleanTables,
-  seedUsers,
-  makeStoryFixtures,
-  makeStoriesArray,
   seedStories,
 };

@@ -10,3 +10,4 @@ VALUES
   ('jd@gmail.com', 'John Doe', 'jdoe', 90027,'$2a$12$e.Qzc5sJDXPM0RRzEuO7B.7gXLEAYgqSeMx.w7QPjgbrixhXULi7C');
 
 COMMIT;
+

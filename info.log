@@ -17,12 +17,10 @@
 {"message":"story with id 6 has been created!","level":"info"}
 {"message":"story with id 10 has been created!","level":"info"}
 {"message":"story with id 11 has been created!","level":"info"}
-<<<<<<< HEAD
 {"message":"story with id 1 not found!","level":"error"}
 {"message":"story with id 1 not found!","level":"error"}
 {"message":"story with id 1 not found!","level":"error"}
 {"message":"story with id 1 not found!","level":"error"}
-=======
 {"message":"story with id 12 has been created!","level":"info"}
 {"message":"author is required","level":"error"}
 {"message":"author is required","level":"error"}
@@ -91,4 +89,5 @@
 {"message":"story has been resolved!","level":"info"}
 {"message":"story has been resolved!","level":"info"}
 {"message":"story has been resolved!","level":"info"}
->>>>>>> e202282382d3ef67c18124e84090b72878583f38
+{"message":" story with id undefined has been deleted!","level":"info"}
+

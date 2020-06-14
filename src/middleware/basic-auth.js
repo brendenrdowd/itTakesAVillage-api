@@ -1,5 +1,8 @@
 const AuthService = require('../auth/auth-service');
 
+//Verifies that username and password match
+//Authorizes token if matching, error if not
+
 function requireAuth(req, res, next) {
   const authToken = req.get('Authorization') || '';
 

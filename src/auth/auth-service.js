@@ -2,6 +2,8 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("../config");
 
+//Auth service finds user with username, confirms password
+//Creates a JSON web token, verifies it and parses it
 const AuthService = {
   getUserWithUserName(db, username) {
     return db("itav_users").where({ username }).first();

@@ -7,11 +7,7 @@
 
 ## Live App link
 
-<<<<<<< HEAD
-- https://itav-app.now.sh/login
-=======
 - https://itav-app.now.sh/
->>>>>>> master
 
 - Client deployed on zeit
 - Server deployed on Heroku
