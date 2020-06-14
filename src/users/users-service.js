@@ -35,9 +35,7 @@ const UsersService = {
   },
 
   deleteUser(db, id) {
-    return db('itav_users')
-      .where({ id })
-      .del()
+    return db('itav_users').where({ id }).delete();
   },
 
   validatePassword(password) {
