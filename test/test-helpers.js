@@ -156,8 +156,9 @@ function seedUsers(db, users) {
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const testUsers = makeUsersArray();
   user = testUsers;
+  console.log("username is a", typeof testUsers[0].username);
   const token = jwt.sign({ user_id: user.id }, secret, {
-    subject: user.username,
+    subject: testUsers[0].username,
     algorithm: "HS256",
   });
   return `Bearer ${token}`;

@@ -51,7 +51,7 @@ describe("story endpoints", function () {
               expect(res.body).to.have.property("created_at");
               expect(res.body.author).to.eql(newStory.author);
               expect(res.body.issue).to.eql(newStory.issue);
-              expect(res.headers.location).to.eql(`/api/story/${res.body.id}`);
+              expect(res.headers.location).to.eql(`api/story/${res.body.id}`);
             })
             .expect((res) =>
               db
