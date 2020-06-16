@@ -89,7 +89,6 @@
 {"message":"story has been resolved!","level":"info"}
 {"message":"story has been resolved!","level":"info"}
 {"message":"story has been resolved!","level":"info"}
-<<<<<<< HEAD
 {"message":"story has been resolved!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
@@ -103,15 +102,9 @@
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
-<<<<<<< HEAD
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
-{"message":"story with id 22 has been created!","level":"info"}
-{"message":"story with id 23 has been created!","level":"info"}
-=======
-{"message":" story with id undefined has been deleted!","level":"info"}
->>>>>>> master
 {"message":" story with id undefined has been deleted!","level":"info"}
 {"message":"story with id 20 not found!","level":"error"}
 {"message":"issue is required","level":"error"}
@@ -168,8 +161,6 @@
 {"message":"flag is required","level":"error"}
 {"message":"issue is required","level":"error"}
 {"message":"flag is required","level":"error"}
-=======
-
 {"message":"story with id 2 has been created!","level":"info"}
 {"message":"story with id 2 has been created!","level":"info"}
 {"message":"story with id 2 has been created!","level":"info"}
@@ -188,7 +179,6 @@
 {"message":"story with id 3 has been created!","level":"info"}
 {"message":"story has been resolved!","level":"info"}
 {"message":" story with id undefined has been deleted!","level":"info"}
->>>>>>> master
 {"message":"story with id 5 has been created!","level":"info"}
 {"message":"story with id 5 has been created!","level":"info"}
 {"message":"story with id 5 has been created!","level":"info"}
