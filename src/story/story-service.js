@@ -1,3 +1,5 @@
+//Gets all stories, specific stories by id
+//Services to allow insertion, updating, and deleting story
 const StoryService = {
   getAllStories(db) {
     return db.select("*").from("itav_stories");

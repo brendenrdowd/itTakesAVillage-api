@@ -1,10 +1,11 @@
-const express = require("express");
-const StoryService = require("./story-service");
-const logger = require("../logger");
+const express = require('express');
+const StoryService = require('./story-service');
+const logger = require('../logger');
 const StoryRouter = express.Router();
 const bodyParser = express.json();
-const { requireAuth } = require("../middleware/jwt-auth");
+const { requireAuth } = require('../middleware/jwt-auth');
 
+//Converts objects into bytes to store into database
 const serializeStory = (story) => ({
   id: story.id,
   issue: story.issue,
@@ -14,9 +15,10 @@ const serializeStory = (story) => ({
   resolved: story.resolved,
 });
 
-StoryRouter.route("/")
+//Gets all stories
+StoryRouter.route('/')
   .get(requireAuth, (req, res, next) => {
-    StoryService.getAllStories(req.app.get("db"), req.user.id)
+    StoryService.getAllStories(req.app.get('db'), req.user.id)
       .then((story) => {
         res.json(story.map(serializeStory));
       })
@@ -27,7 +29,7 @@ StoryRouter.route("/")
     const author = req.user.id;
     const newStory = { issue, flag, author };
 
-    for (const field of ["issue", "flag"]) {
+    for (const field of ['issue', 'flag']) {
       if (!req.body[field]) {
         logger.error(`${field} is required`);
         return res.status(400).send({
@@ -35,22 +37,23 @@ StoryRouter.route("/")
         });
       }
     }
-
-    StoryService.insertStory(req.app.get("db"), newStory)
+    //Creates story and story id for specific story
+    StoryService.insertStory(req.app.get('db'), newStory)
       .then((story) => {
         logger.info(`story with id ${story.id} has been created!`);
         res
           .status(201)
-          .location(`/story/${story.id}`)
+          .location(`api/story/${story.id}`)
           .json(serializeStory(story));
       })
       .catch(next);
   });
 
-StoryRouter.route("/:id")
+//Checks and gets story by id
+StoryRouter.route('/:id')
   .all((req, res, next) => {
     const { id } = req.params;
-    StoryService.getById(req.app.get("db"), id)
+    StoryService.getById(req.app.get('db'), id)
       .then((story) => {
         console.log(id);
         if (!story) {
@@ -67,9 +70,10 @@ StoryRouter.route("/:id")
   .get((req, res) => {
     res.json(serializeStory(res.story));
   })
+  //Allows user to delete story
   .delete((req, res, next) => {
     const { id } = req.params;
-    StoryService.deleteStory(req.app.get("db"), id)
+    StoryService.deleteStory(req.app.get('db'), id)
       .then((story) => {
         logger.info(` story with id ${story.id} has been deleted!`);
         res.status(204).end();
@@ -86,7 +90,8 @@ StoryRouter.route("/:id")
         },
       });
     }
-    StoryService.updateStory(req.app.get("db"), req.params.id, storyToUpdate)
+    //Allow user to update story
+    StoryService.updateStory(req.app.get('db'), req.params.id, storyToUpdate)
       .then(() => {
         logger.info(`story has been resolved!`);
         res

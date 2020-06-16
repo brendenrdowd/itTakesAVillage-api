@@ -1,5 +1,6 @@
 const AuthService = require("../auth/auth-service");
 
+//Checks and verifies token for accessibility 
 function requireAuth(req, res, next) {
   const authToken = req.get("Authorization") || "";
 

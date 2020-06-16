@@ -1,11 +1,12 @@
 const express = require('express');
 const path = require('path');
 const UsersService = require('./users-service');
-const { requireAuth } = require('../middleware/jwt-auth')
+const { requireAuth } = require('../middleware/jwt-auth');
 
 const usersRouter = express.Router();
 const jsonBodyParser = express.json();
 
+//Gets all users
 usersRouter.route('/').get((req, res, next) => {
   UsersService.getAllUsers(req.app.get('db'))
     .then((users) => {
@@ -13,6 +14,7 @@ usersRouter.route('/').get((req, res, next) => {
     })
     .catch(next);
 });
+//Gets user by id
 usersRouter.get('/:id', (req, res, next) => {
   UsersService.getUserById(
     req.app.get('db'),
@@ -22,6 +24,7 @@ usersRouter.get('/:id', (req, res, next) => {
     })
     .catch(next);
 })
+//Updates user by id
 usersRouter.patch('/:id',jsonBodyParser, (req, res, next) => {
   console.log(req.body)
   const { username, location } = req.body;
@@ -45,6 +48,7 @@ usersRouter.patch('/:id',jsonBodyParser, (req, res, next) => {
   );
 })
 
+//Allows user to delete account
 usersRouter.delete('/', requireAuth, (req, res, next) => {
   UsersService.deleteUser(
     req.app.get('db'),
@@ -55,6 +59,7 @@ usersRouter.delete('/', requireAuth, (req, res, next) => {
     .catch(next);
 })
 
+//Post request for submitting user registration
 usersRouter.post('/', jsonBodyParser, (req, res, next) => {
   const { name, email, username, location, password } = req.body;
 
@@ -63,16 +68,18 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
       return res.status(400).json({
         error: `Missing '${field}' in request body`,
       });
-
+//Validates password
   const passwordError = UsersService.validatePassword(password);
 
   if (passwordError) return res.status(400).json({ error: passwordError });
 
+  //Checks database if user has a username
   UsersService.hasUserWithUserName(req.app.get('db'), username)
     .then((hasUserWithUserName) => {
       if (hasUserWithUserName)
         return res.status(400).json({ error: `Username already taken` });
 
+  //Checks database if user has an email
       UsersService.hasUserWithEmail(req.app.get('db'), email).then(
         (hasUserWithEmail) => {
           if (hasUserWithEmail) {
@@ -81,6 +88,7 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
         }
       );
 
+  //Hashes password for extra security
       return UsersService.hashPassword(password).then((hashedPassword) => {
         const newUser = {
           username,

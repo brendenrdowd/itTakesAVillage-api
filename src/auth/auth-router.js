@@ -5,6 +5,7 @@ const { requireAuth } = require("../middleware/jwt-auth");
 const authRouter = express.Router();
 const jsonBodyParser = express.json();
 
+// Verifies that username and password are present in input field
 authRouter.post("/login", jsonBodyParser, (req, res, next) => {
   const { username, password } = req.body;
   const loginUser = { username, password };
@@ -15,11 +16,12 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
         error: `Missing '${key}' in request body`,
       });
 
+  // Finds username and password. Verifies login info is correct
   AuthService.getUserWithUserName(req.app.get("db"), loginUser.username)
     .then((dbUser) => {
       if (!dbUser)
         return res.status(400).json({
-          error: "Incorrect username or password ",
+          error: "Incorrect username or password",
         });
 
       return AuthService.comparePasswords(
@@ -42,7 +44,7 @@ authRouter.post("/login", jsonBodyParser, (req, res, next) => {
     })
     .catch(next);
 });
-
+//Used to obtain a renewed access token
 authRouter.post("/refresh", requireAuth, (req, res) => {
   const sub = req.user.username;
   const payload = { user_id: req.user.id };

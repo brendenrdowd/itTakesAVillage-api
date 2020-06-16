@@ -6,7 +6,7 @@ const helpers = require("./test-helpers");
 describe("Users Endpoints", function () {
   let db;
 
-  const { testUsers } = helpers.makeStoryFixtures();
+  const { testUsers } = helpers.makeFixtures();
   const testUser = testUsers[0];
 
   before("make knex instance", () => {
@@ -27,7 +27,6 @@ describe("Users Endpoints", function () {
     context(`User Validation`, () => {
       beforeEach("insert users", () => {
         return db.into("itav_users").insert(testUsers);
-        helpers.seedUsers(db, testUsers);
       });
 
       const requiredFields = [

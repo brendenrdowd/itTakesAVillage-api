@@ -31,6 +31,7 @@
     "morgan": "^1.9.1",
     "pg": "^8.0.3",
     "treeize": "^2.1.2",
+    "validator": "^13.0.0",
     "winston": "^3.2.1",
     "xss": "^1.0.3"
   },
@@ -38,7 +39,7 @@
     "chai": "^4.2.0",
     "mocha": "^5.2.0",
     "nodemon": "^1.18.9",
-    "postgrator-cli": "^3.1.0",
+    "postgrator-cli": "^3.3.0",
     "supertest": "^3.3.0"
   }
 }

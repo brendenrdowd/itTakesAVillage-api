@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-// makeUsersArray
+//Test helpers for test users
 function makeUsersArray() {
   return [
     {
@@ -39,11 +39,32 @@ function makeUsersArray() {
   ];
 }
 // needs to be updated
+//Test helper for test stories
 function makeStoriesArray(users) {
   return [
     {
-      id: users[0].id,
       author: 1,
+      issue: "story test 1",
+      flag: "clothes",
+      resolved: false,
+      created_at: new Date(),
+    },
+    {
+      author: 2,
+      issue: "story test 1",
+      flag: "clothes",
+      resolved: false,
+      created_at: new Date(),
+    },
+    {
+      author: 3,
+      issue: "story test 1",
+      flag: "clothes",
+      resolved: false,
+      created_at: new Date(),
+    },
+    {
+      author: 4,
       issue: "story test 1",
       flag: "clothes",
       resolved: false,
@@ -76,31 +97,28 @@ function makeStoriesArray(users) {
   ];
 }
 // needs to be updated
+//Test helpers for test comments
 function makeCommentsArray(users, stories) {
   return [
     {
-      id: 1,
       author: 1,
       story: 1,
       comment: "test comment 1",
       created_at: new Date(),
     },
     {
-      id: 2,
       author: 1,
       story: 1,
       comment: "test comment 2",
       created_at: new Date(),
     },
     {
-      id: 3,
       author: 1,
       story: 1,
       comment: "test comment 3",
       created_at: new Date(),
     },
     {
-      id: 4,
       author: 1,
       story: 1,
       comment: "test comment 4",
@@ -109,14 +127,14 @@ function makeCommentsArray(users, stories) {
   ];
 }
 
-function makeStoryFixtures() {
+function makeFixtures() {
   const testUsers = makeUsersArray();
   const testStories = makeStoriesArray(testUsers);
   const testComments = makeCommentsArray(testUsers, testStories);
 
   return { testUsers, testStories, testComments };
 }
-
+//Truncates tables in database
 function cleanTables(db) {
   return db.raw(
     `TRUNCATE
@@ -126,7 +144,7 @@ function cleanTables(db) {
       RESTART IDENTITY CASCADE;`
   );
 }
-
+//Seeds hashed users and passwords
 function seedUsers(db, users) {
   const hashedUsers = users.map((user) => ({
     ...user,
@@ -136,23 +154,21 @@ function seedUsers(db, users) {
 }
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
-  console.log(user.name);
-
+  const testUsers = makeUsersArray();
+  user = testUsers;
   const token = jwt.sign({ user_id: user.id }, secret, {
     subject: user.username,
     algorithm: "HS256",
   });
-  return `Bearer ${token} `;
+  return `Bearer ${token}`;
 }
 
 module.exports = {
   makeUsersArray,
   makeCommentsArray,
   makeStoriesArray,
-  makeStoryFixtures,
   cleanTables,
   seedUsers,
   makeAuthHeader,
-  // makeFixtures,
-  // seedStories,
+  makeFixtures,
 };
