@@ -196,3 +196,9 @@
 {"message":"story with id 5 has been created!","level":"info"}
 {"message":"story with id 5 has been created!","level":"info"}
 {"message":"story with id 5 has been created!","level":"info"}
+{"message":"story with id 5 has been created!","level":"info"}
+{"message":"story has been resolved!","level":"info"}
+{"message":" story with id undefined has been deleted!","level":"info"}
+{"message":"story with id 3 has been created!","level":"info"}
+{"message":"story has been resolved!","level":"info"}
+{"message":" story with id undefined has been deleted!","level":"info"}
