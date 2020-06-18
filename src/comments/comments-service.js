@@ -27,6 +27,6 @@ const CommentsService = {
   editComment(knex, id, newComment) {
     return knex('itav_comments').where({ id }).update(newComment);
   },
-}
+};
 
-module.exports = CommentsService
+module.exports = CommentsService;

@@ -25,7 +25,7 @@ usersRouter.get('/:id', (req, res, next) => {
     .catch(next);
 })
 //Updates user by id
-usersRouter.patch('/:id',jsonBodyParser, (req, res, next) => {
+usersRouter.patch('/:id', jsonBodyParser, (req, res, next) => {
   console.log(req.body)
   const { username, location } = req.body;
 
@@ -57,7 +57,7 @@ usersRouter.delete('/', requireAuth, (req, res, next) => {
       res.json({ message: "User was deleted" });
     })
     .catch(next);
-})
+});
 
 //Post request for submitting user registration
 usersRouter.post('/', jsonBodyParser, (req, res, next) => {
@@ -68,7 +68,7 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
       return res.status(400).json({
         error: `Missing '${field}' in request body`,
       });
-//Validates password
+  //Validates password
   const passwordError = UsersService.validatePassword(password);
 
   if (passwordError) return res.status(400).json({ error: passwordError });
@@ -79,7 +79,7 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
       if (hasUserWithUserName)
         return res.status(400).json({ error: `Username already taken` });
 
-  //Checks database if user has an email
+      //Checks database if user has an email
       UsersService.hasUserWithEmail(req.app.get('db'), email).then(
         (hasUserWithEmail) => {
           if (hasUserWithEmail) {
@@ -88,7 +88,7 @@ usersRouter.post('/', jsonBodyParser, (req, res, next) => {
         }
       );
 
-  //Hashes password for extra security
+      //Hashes password for extra security
       return UsersService.hashPassword(password).then((hashedPassword) => {
         const newUser = {
           username,

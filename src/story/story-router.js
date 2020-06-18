@@ -36,7 +36,7 @@ StoryRouter.route('/')
           error: { message: `${field} is required` },
         });
       }
-    }
+    };
     //Creates story and story id for specific story
     StoryService.insertStory(req.app.get('db'), newStory)
       .then((story) => {

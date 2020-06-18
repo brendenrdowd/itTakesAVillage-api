@@ -30,7 +30,7 @@ function requireAuth(req, res, next) {
     console.log(error);
     res.status(401).json({ error: "Unauthorized request 2" });
   }
-}
+};
 
 module.exports = {
   requireAuth,

@@ -143,7 +143,7 @@ function cleanTables(db) {
       itav_stories
       RESTART IDENTITY CASCADE;`
   );
-}
+};
 //Seeds hashed users and passwords
 function seedUsers(db, users) {
   const hashedUsers = users.map((user) => ({
@@ -151,7 +151,7 @@ function seedUsers(db, users) {
     password: bcrypt.hashSync(user.password, 1),
   }));
   return db.into("itav_users").insert(hashedUsers);
-}
+};
 
 function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
   const testUsers = makeUsersArray();
@@ -162,7 +162,7 @@ function makeAuthHeader(user, secret = process.env.JWT_SECRET) {
     algorithm: "HS256",
   });
   return `Bearer ${token}`;
-}
+};
 
 module.exports = {
   makeUsersArray,

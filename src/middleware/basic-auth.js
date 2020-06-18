@@ -39,7 +39,7 @@ function requireAuth(req, res, next) {
       );
     })
     .catch(next);
-}
+};
 
 module.exports = {
   requireAuth,
